@@ -1,0 +1,30 @@
+unit MainMVP;
+
+interface
+
+uses
+  PressMVPPresenter;
+
+type
+  TMainFormPresenter = class(TPressMVPMainFormPresenter)
+  protected
+    procedure InitPresenter; override;
+  end;
+
+implementation
+uses
+  PressUser, PressMVPCommand, ContatoMVP;
+
+{ TMainFormPresenter }
+
+procedure TMainFormPresenter.InitPresenter;
+begin
+  inherited;
+  BindPresenter(TContatoEditPresenter, 'NovoContatoButton');
+  BindPresenter(TContatoQueryPresenter, 'PesqContatoButton');
+  BindPresenter(TCidadeQueryPresenter, 'PesqCidadeButton');
+  BindCommand(TPressMVPCloseApplicationCommand, 'FecharButton');
+  PressUserData.Logon('', '');
+end;
+
+end.

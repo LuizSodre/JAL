@@ -1,0 +1,14 @@
+[OPFBroker]
+DefaultServiceName := 'Zeos';
+
+[OPFBroker.Zeos]
+Connector.Database.CharacterSet := csISO8859_1;
+Connector.Database.LibraryName := 'fbclient.dll';
+Connector.Database.DatabaseName := 'localhost:c:\data\agenda.fb';
+Connector.Database.UserName := 'sysdba';
+Connector.Database.PassWord := 'masterkey';
+Connector.Database
+Connector.Database
+Connector.Database
+Connector.Database
+Connector.Database

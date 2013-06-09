@@ -1,0 +1,25 @@
+unit ContatoQueryFrm;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, CustomQueryFrm, StdCtrls, Buttons, ExtCtrls, Grids;
+
+type
+  TContatoQueryForm = class(TCustomQueryForm)
+    edtNome: TEdit;
+    cbCidade: TComboBox;
+    lblNome: TLabel;
+    lblCidade: TLabel;
+  end;
+
+implementation
+uses
+  PressVCLBroker, ContatoMVP;
+
+{$R *.dfm}
+
+initialization
+  PressVCLForm(TContatoQueryPresenter, TContatoQueryForm);
+end.

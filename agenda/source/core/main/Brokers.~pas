@@ -1,0 +1,23 @@
+unit Brokers;
+
+interface
+
+implementation
+
+uses
+  PressApplication,
+  PressSubject,
+  PressAttributes,
+  PressZeosBroker,
+  PressMySQLBroker,
+  PressPgSQLBroker,
+  PressMessages_ptbr;
+
+initialization
+  PressApp.ConfigFileName := 'c:\Agenda.conf';
+  PressApp.ReadConfigFile;
+  PressModel.ClassIdStorageName := 'ModelClasses';
+  PressModel.DefaultGeneratorName := 'gen_agenda';
+  PressModel.DefaultKeyType := TPressInteger;
+
+end.

@@ -1,0 +1,17 @@
+inherited CidadeQueryForm: TCidadeQueryForm
+  Caption = 'CidadeQueryForm'
+  PixelsPerInch = 96
+  TextHeight = 16
+  inherited Panel1: TPanel
+    inherited btnPesquisar: TBitBtn
+      Left = 193
+    end
+    object edtNome: TEdit
+      Left = 56
+      Top = 8
+      Width = 121
+      Height = 24
+      TabOrder = 1
+    end
+  end
+end
