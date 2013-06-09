@@ -2,7 +2,7 @@ unit Cliente_MDL;
 
 interface
 uses
-  Windows, Messages, SysUtils, Variants, TypInfo, ActiveX, Base_MDL;
+  Windows, Messages, SysUtils, Variants, TypInfo, ActiveX, Base_MDL, Constantes;
 
 type
   TCliente = class(TBase)
@@ -36,7 +36,9 @@ type
     procedure setTpPessoa(const Value: String);
     procedure setUf(const Value: String);
   protected
+
   public
+    procedure Clear;override;
     property Nome         : String read fNome        write setNome       ;
     property TpPessoa     : String read fTpPessoa    write setTpPessoa   ;
     property CpfCnpj      : String read fCpfCnpj     write setCpfCnpj    ;
@@ -55,6 +57,23 @@ type
 implementation
 
 { TCliente }
+
+procedure TCliente.Clear;
+begin
+  inherited;
+  Self.Nome := NO_STRING;
+  Self.TpPessoa := NO_STRING;
+  Self.CpfCnpj := NO_STRING;
+  Self.Endereco := NO_STRING;
+  Self.Bairro := NO_STRING;
+  Self.Municipio := NO_STRING;
+  Self.Complemento := NO_STRING;
+  Self.Cep := NO_STRING;
+  Self.Telefone := NO_STRING;
+  Self.Fax := NO_STRING;
+  Self.Email := NO_STRING;
+  Self.Numero := NO_STRING;
+end;
 
 constructor TCliente.Create;
 begin

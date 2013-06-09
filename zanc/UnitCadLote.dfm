@@ -2,6 +2,7 @@ inherited frmCadLote: TfrmCadLote
   Height = 401
   Caption = 'Cadastro de lote'
   OldCreateOrder = True
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlGenerico: TPanel
@@ -112,7 +113,7 @@ inherited frmCadLote: TfrmCadLote
       Width = 120
       Height = 21
       Date = 0.561473182868212500
-      Format = 'gg'
+      Format = 'hh:mm'
       Time = 0.561473182868212500
       TabOrder = 3
     end
@@ -191,11 +192,53 @@ inherited frmCadLote: TfrmCadLote
       Height = 21
       TabOrder = 11
     end
+    object edt1: TDateEdit
+      Left = 16
+      Top = 312
+      Width = 121
+      Height = 21
+      DefaultToday = True
+      NumGlyphs = 2
+      Weekends = [Mon]
+      YearDigits = dyFour
+      TabOrder = 12
+    end
+    object Button1: TButton
+      Left = 264
+      Top = 312
+      Width = 75
+      Height = 25
+      Caption = 'Button1'
+      TabOrder = 13
+      OnClick = Button1Click
+    end
+    object MaskEdit1: TMaskEdit
+      Left = 152
+      Top = 312
+      Width = 41
+      Height = 21
+      EditMask = '!90:00;1;'
+      MaxLength = 5
+      TabOrder = 14
+      Text = '  :  '
+    end
+    object Button2: TButton
+      Left = 352
+      Top = 312
+      Width = 75
+      Height = 25
+      Caption = 'Button2'
+      TabOrder = 15
+      OnClick = Button2Click
+    end
   end
   inherited StatusBar1: TStatusBar
     Top = 344
   end
   inherited Panel1: TPanel
     Height = 344
+    inherited btnConfirmar: TBitBtn
+      Kind = bkCustom
+    end
   end
 end

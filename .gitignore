@@ -12,3 +12,6 @@ __history
 *.dll
 bin/*
 
+*.~pas
+*.~pas
+*.~ddp

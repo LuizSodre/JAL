@@ -26,9 +26,50 @@ begin
 end;
 
 function TCliente_DAO.getAll: TList;
+var
+  qry : TZQuery;
+  Cliente : TCliente;
+  ListaRetorno : TList;
 begin
-  Result := nil;
+  ListaRetorno := TList.Create;
+  ListaRetorno.Clear;
+  qry := TZQuery.Create(nil);
+  try
+    data.conDBZanc.Connect;
+    qry.Connection := data.conDBZanc;
+    qry.SQL.Add('select * from tcliente');
+    qry.Open;
+
+    if not qry.IsEmpty
+     then begin
+       while not qry.Eof do
+       begin
+         Cliente := TCliente.Create;
+         Cliente.Clear;
+         Cliente.Id := qry.fieldbyname('Id').AsInteger;
+         Cliente.Nome := qry.fieldbyname('Nome').AsString;
+         Cliente.TpPessoa := qry.fieldbyname('TpPessoa').AsString;
+         Cliente.CpfCnpj := qry.fieldbyname('CpfCnpj').AsString;
+         Cliente.Endereco := qry.fieldbyname('Endereco').AsString;
+         Cliente.Numero := qry.fieldbyname('Numero').AsString;
+         Cliente.Complemento := qry.fieldbyname('Complemento').AsString;
+         Cliente.Bairro := qry.fieldbyname('Bairro').AsString;
+         Cliente.Municipio := qry.fieldbyname('Municipio').AsString;
+         Cliente.Uf := qry.fieldbyname('Uf').AsString;
+         Cliente.Cep := qry.fieldbyname('Cep').AsString;
+         Cliente.Telefone := qry.fieldbyname('Telefone').AsString;
+         Cliente.Fax := qry.fieldbyname('Fax').AsString;
+         Cliente.Email := qry.fieldbyname('Email').AsString;
+         ListaRetorno.Add(Cliente);
+         qry.Next;
+       end;
+     end;
+  finally
+    FreeAndNil(qry);
+  end;
+  Result := ListaRetorno;
 end;
+
 
 function TCliente_DAO.getById(prId: Integer): TCliente;
 var
