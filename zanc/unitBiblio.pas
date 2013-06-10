@@ -5,7 +5,7 @@ interface
 uses Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   Db, ComCtrls, StdCtrls, ExtCtrls, Mask, DBCtrls, dbtables;
 
-procedure chamafrm(tipo: TFormClass; dono: TComponent);
+procedure chamafrm(tipo: TFormClass; dono: TComponent; prParent : TPanel);
 procedure buscacab0(cab0: string);
 function enviacab():string;
 function viradata(text: string):string;
@@ -15,14 +15,15 @@ implementation
 var
    cabx: string;
 
-procedure chamafrm(tipo: TFormClass; dono: TComponent);
+procedure chamafrm(tipo: TFormClass; dono: TComponent; prParent : TPanel);
 begin
-with tipo.Create(dono) do
-     try
-        ShowModal;
-     finally
-            Free;
-     end;
+  with tipo.Create(dono) do
+   try
+     ShowModal;
+     Parent := prParent;
+   finally
+     Free;
+   end;
 end;
 
 procedure buscacab0(cab0: string);

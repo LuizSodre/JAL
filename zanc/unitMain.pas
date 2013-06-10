@@ -23,7 +23,6 @@ type
     actMain: TActionList;
     TreeView: TTreeView;
     Splitter1: TSplitter;
-    lboLista: TListBox;
     imgTree: TImageList;
     N12Acesso1: TMenuItem;
     dsVistoria: TDataSource;
@@ -38,6 +37,19 @@ type
     N22Contrato1: TMenuItem;
     N23Lote1: TMenuItem;
     N22Contratantes1: TMenuItem;
+    pnlForms: TPanel;
+    lboLista: TListBox;
+    ToolButton1: TToolButton;
+    N3Consulta1: TMenuItem;
+    N4Relatrio1: TMenuItem;
+    N21Clientes2: TMenuItem;
+    N22Contratantes2: TMenuItem;
+    N23Contrato1: TMenuItem;
+    N34Lote1: TMenuItem;
+    N41Clientes1: TMenuItem;
+    N32Contratantes1: TMenuItem;
+    N33Contrato1: TMenuItem;
+    N34Lote2: TMenuItem;
     procedure Sair1Click(Sender: TObject);
     procedure tmrMainTimer(Sender: TObject);
     procedure Sobre1Click(Sender: TObject);
@@ -92,7 +104,8 @@ var
 
 implementation
 
-uses UnitCadContratante, UnitCadCliente,{UnitCadcontrato,} UnitCadLote;
+uses UnitCadContratante, UnitCadCliente,{UnitCadcontrato,} UnitCadLote,
+  UntConsGenerico, untConsCliente;
 
 {$R *.DFM}
 
@@ -114,9 +127,23 @@ end;
 
 procedure TfrmMain.TreeViewClick(Sender: TObject);
 begin
-   TreeView.SetFocus;
-   lboLista.Clear;
-   lboLista.Items.Add(TreeView.Selected.Text);
+  TreeView.SetFocus;
+  lboLista.Clear;
+  lboLista.Visible := True;
+  lboLista.Items.Add(TreeView.Selected.Text);
+
+  if Assigned(frmCadCliente)
+   then frmCadCliente.Hide;
+
+  if Assigned(frmCadContratante)
+   then frmCadContratante.Hide;
+
+  if Assigned(frmCadLote)
+   then frmCadLote.Hide;
+
+  if Assigned(frmConsCliente)
+   then frmConsCliente.Hide;
+
 end;
 
 procedure TfrmMain.lboListaDblClick(Sender: TObject);
@@ -125,13 +152,55 @@ begin
    if Copy(lboLista.Items.Text,1,4)= '1.1.' then
      // chamafrm(TfrmCadEmpresa, self)
    else if Copy(lboLista.Items.Text,1,4)= '2.1.' then
-    chamafrm(TfrmCadCliente, self)
+   begin
+     if not Assigned(frmCadCliente)
+      then begin
+        frmCadCliente := TfrmCadCliente.Create(self);
+        frmCadCliente.Parent := pnlForms;
+        frmCadCliente.WindowState := wsNormal;
+        frmCadCliente.StatusBar1.Visible := False;
+      end;
+     //lblTitulo.Caption := 'Cadastro : Cliente';
+     frmCadCliente.Left := 10;
+     frmCadCliente.Top := 10;
+     frmCadCliente.lblTitulo.Caption := 'Cadastro : Cliente';
+     frmCadCliente.lblTituloMascara.Caption := frmCadCliente.lblTitulo.Caption;
+     lboLista.Visible := False;
+     frmCadCliente.Show;
+   end
    else if Copy(lboLista.Items.Text,1,4)= '2.2.' then
-    chamafrm(TfrmCadContratante, self)
+   begin
+     if not Assigned(frmCadContratante)
+      then begin
+        frmCadContratante := TfrmCadContratante.Create(self);
+        frmCadContratante.Parent := pnlForms;
+        frmCadContratante.WindowState := wsNormal;
+        frmCadContratante.StatusBar1.Visible := False;
+      end;
+     //lblTitulo.Caption := 'Cadastro : Contratante';
+     frmCadContratante.Left := 10;
+     frmCadContratante.Top := 10;
+     frmCadContratante.lblTitulo.Caption := 'Cadastro : Contratante';
+     frmCadContratante.lblTituloMascara.Caption := frmCadContratante.lblTitulo.Caption;
+     lboLista.Visible := False;
+     frmCadContratante.Show;
+   end
    else if Copy(lboLista.Items.Text,1,4)= '2.3.' then
 //    chamafrm(TfrmCadContrato, self)
    else if Copy(lboLista.Items.Text,1,4)= '2.4.' then
-    chamafrm(TfrmCadLote, self)
+   begin
+     if not Assigned(frmCadLote)
+      then begin
+        frmCadLote := TfrmCadLote.Create(self);
+        frmCadLote.Parent := pnlForms;
+        frmCadLote.WindowState := wsNormal;
+        frmCadLote.StatusBar1.Visible := False;
+      end;
+     frmCadLote.Left := 10;
+     frmCadLote.Top := 10;
+     lboLista.Visible := False;
+     frmCadLote.Show;
+   end
    else if Copy(lboLista.Items.Text,1,4)= '2.5.' then
      //   chamafrm(TfrmEstado, self)
    else if Copy(lboLista.Items.Text,1,4)= '2.6.' then
@@ -145,6 +214,21 @@ begin
    else if Copy(lboLista.Items.Text,1,5)= '2.10.' then
      //   chamafrm(TfrmVeiculo, self)
    else if Copy(lboLista.Items.Text,1,4)= '3.1.' then
+   begin
+     if not Assigned(frmConsCliente)
+      then begin
+        frmConsCliente := TfrmConsCliente.Create(self);
+        frmConsCliente.Parent := pnlForms;
+        frmConsCliente.WindowState := wsNormal;
+        frmConsCliente.StatusBar1.Visible := False;
+      end;
+     frmConsCliente.lblTitulo.Caption := 'Consulta : Cliente';
+     frmConsCliente.lblTituloMascara.Caption := frmConsCliente.lblTitulo.Caption;
+     frmConsCliente.Left := 10;
+     frmConsCliente.Top := 10;
+     lboLista.Visible := False;
+     frmConsCliente.Show;
+   end
     //    chamafrm(TfrmCadVistoria, self)
    else if Copy(lboLista.Items.Text,1,4)= '3.2.' then
       //  chamafrm(TfrmCad2via, self)
@@ -167,7 +251,7 @@ begin
    else if Copy(lboLista.Items.Text,1,6)= '5.3.2.' then
        // chamafrm(TfrmProc04, self)
    else if Copy(lboLista.Items.Text,1,4)= '6.1.' then
-        chamafrm(TfrmSuporte, self)
+        chamafrm(TfrmSuporte, self, pnlForms)
    else
        Abort;
 end;
@@ -351,7 +435,21 @@ end;
 
 procedure TfrmMain.N21Clientes1Click(Sender: TObject);
 begin
-chamafrm(TfrmCadCliente, self);
+  //chamafrm(TfrmCadCliente, self, pnlForms);
+  if not Assigned(frmCadCliente)
+  then begin
+    frmCadCliente := TfrmCadCliente.Create(self);
+    frmCadCliente.Parent := pnlForms;
+    frmCadCliente.WindowState := wsNormal;
+    frmCadCliente.StatusBar1.Visible := False;
+  end;
+ //lblTitulo.Caption := 'Cadastro : Cliente';
+ frmCadCliente.Left := 10;
+ frmCadCliente.Top := 10;
+ frmCadCliente.lblTitulo.Caption := 'Cadastro : Cliente';
+ frmCadCliente.lblTituloMascara.Caption := frmCadCliente.lblTitulo.Caption;
+ lboLista.Visible := False;
+ frmCadCliente.Show;
 end;
 
 procedure TfrmMain.N22Contrato1Click(Sender: TObject);
@@ -361,12 +459,12 @@ end;
 
 procedure TfrmMain.N23Lote1Click(Sender: TObject);
 begin
-  chamafrm(TfrmCadLote, self);
+  chamafrm(TfrmCadLote, self, pnlForms);
 end;
 
 procedure TfrmMain.N22Contratantes1Click(Sender: TObject);
 begin
-  chamafrm(TfrmCadContratante, self);
+  chamafrm(TfrmCadContratante, self, pnlForms);
 end;
 
 end.

@@ -90,8 +90,8 @@ MaxStackSize=1048576
 ImageBase=4194304
 ExeDescription=
 [Directories]
-OutputDir=
-UnitOutputDir=
+OutputDir=c:\projeto
+UnitOutputDir=c:\dcu
 PackageDLLOutputDir=
 PackageDCPOutputDir=
 SearchPath=
@@ -134,7 +134,13 @@ OriginalFilename=
 ProductName=
 ProductVersion=1.0.0.0
 Comments=
-[Excluded Packages]
-c:\program files\borland\delphi7\Bin\dcltee70.bpl=TeeChart Components
-c:\program files\borland\delphi7\Bin\dcldss70.bpl=Borland Decision Cube Components
-C:\Program Files\Borland\Delphi7\Bin\dcltqr70.bpl=TeeChart for QuickReport Components
+[HistoryLists\hlUnitAliases]
+Count=1
+Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
+[HistoryLists\hlUnitOutputDirectory]
+Count=1
+Item0=c:\dcu
+[HistoryLists\hlOutputDirectorry]
+Count=2
+Item0=c:\projeto
+Item1=c:\projetos

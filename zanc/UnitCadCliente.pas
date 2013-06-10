@@ -37,8 +37,13 @@ type
     edtId: TEdit;
     Label13: TLabel;
     edtComplemento: TEdit;
+    lblTitulo: TLabel;
+    lblTituloMascara: TLabel;
+    Label15: TLabel;
     procedure btn1Click(Sender: TObject);
     procedure btnConfirmarClick(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
@@ -52,7 +57,7 @@ var
 
 implementation
 
-uses Cliente_DAO;
+uses Cliente_DAO, unitMain;
 
 
 {$R *.dfm}
@@ -136,13 +141,27 @@ begin
         try
           vErroMsg := NO_STRING;
           if dao.Gravar(Cliente,vErroMsg)
-           then ShowMessage(vErroMsg)
+           then begin
+             ShowMessage(vErroMsg);
+             Close;
+           end
            else ShowMessage(vErroMsg);
         finally
           FreeAndNil(dao);
         end;
       end;
    end;
+end;
+
+procedure TfrmCadCliente.btnCancelarClick(Sender: TObject);
+begin
+  Close;
+end;
+
+procedure TfrmCadCliente.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  //Action := caFree;
 end;
 
 end.

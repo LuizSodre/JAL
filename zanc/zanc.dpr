@@ -23,7 +23,9 @@ uses
   Contratante_DAO in 'Contratante_DAO.pas',
   Contratante_MDL in 'Contratante_MDL.pas',
   Cliente_DAO in 'Cliente_DAO.pas',
-  Cliente_MDL in 'Cliente_MDL.pas';
+  Cliente_MDL in 'Cliente_MDL.pas',
+  UntConsGenerico in 'UntConsGenerico.pas' {frmConsGenerico},
+  untConsCliente in 'untConsCliente.pas' {frmConsCliente};
 
 {$R *.res}
 
@@ -31,8 +33,5 @@ begin
   Application.Initialize;
   Application.CreateForm(Tdata, data);
   Application.CreateForm(TfrmMain, frmMain);
-  Application.CreateForm(TfrmCadContratante, frmCadContratante);
-  //  Application.CreateForm(TfrmCadContrato, frmCadContrato);
-  Application.CreateForm(TfrmCadCliente, frmCadCliente);
   Application.Run;
 end.

@@ -37,12 +37,17 @@ type
     Button1: TButton;
     MaskEdit1: TMaskEdit;
     Button2: TButton;
+    lblTitulo: TLabel;
+    Label14: TLabel;
+    Label12: TLabel;
+    Label13: TLabel;
     procedure cmbContratantesDropDown(Sender: TObject);
     procedure btnConfirmarClick(Sender: TObject);
     procedure cmbClientesDropDown(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
   private
     { Private declarations }
     procedure LoadCombos;
@@ -225,6 +230,11 @@ procedure TfrmCadLote.FormCreate(Sender: TObject);
 begin
   inherited;
   LoadCombos;
+end;
+
+procedure TfrmCadLote.btnCancelarClick(Sender: TObject);
+begin
+  Close;
 end;
 
 end.
