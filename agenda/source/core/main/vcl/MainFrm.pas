@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Buttons, StdCtrls;
+  Dialogs, Buttons, StdCtrls, Menus;
 
 type
   TMainForm = class(TForm)
@@ -12,6 +12,15 @@ type
     btnPesquisarContato: TBitBtn;
     btnPesquisarCidade: TBitBtn;
     btnFechar: TBitBtn;
+    mm1: TMainMenu;
+    mnuCadastro: TMenuItem;
+    mnuConsulta: TMenuItem;
+    mnuRelatorio: TMenuItem;
+    mnuSair: TMenuItem;
+    mnuCadContato: TMenuItem;
+    mnuCadCidade: TMenuItem;
+    mnuConsContato: TMenuItem;
+    mnuConsCidade: TMenuItem;
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
   private

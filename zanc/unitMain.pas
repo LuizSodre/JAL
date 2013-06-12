@@ -459,7 +459,17 @@ end;
 
 procedure TfrmMain.N23Lote1Click(Sender: TObject);
 begin
-  chamafrm(TfrmCadLote, self, pnlForms);
+  if not Assigned(frmCadLote)
+   then begin
+     frmCadLote := TfrmCadLote.Create(self);
+     frmCadLote.Parent := pnlForms;
+     frmCadLote.WindowState := wsNormal;
+     frmCadLote.StatusBar1.Visible := False;
+   end;
+  frmCadLote.Left := 10;
+  frmCadLote.Top := 10;
+  lboLista.Visible := False;
+  frmCadLote.Show;
 end;
 
 procedure TfrmMain.N22Contratantes1Click(Sender: TObject);
