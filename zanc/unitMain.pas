@@ -93,6 +93,7 @@ type
     procedure N22Contrato1Click(Sender: TObject);
     procedure N23Lote1Click(Sender: TObject);
     procedure N22Contratantes1Click(Sender: TObject);
+    procedure N34Lote2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -105,7 +106,7 @@ var
 implementation
 
 uses UnitCadContratante, UnitCadCliente,{UnitCadcontrato,} UnitCadLote,
-  UntConsGenerico, untConsCliente;
+  UntConsGenerico, untConsCliente, UnitParSistema;
 
 {$R *.DFM}
 
@@ -150,7 +151,21 @@ procedure TfrmMain.lboListaDblClick(Sender: TObject);
 begin
    lboLista.SetFocus;
    if Copy(lboLista.Items.Text,1,4)= '1.1.' then
+   begin
      // chamafrm(TfrmCadEmpresa, self)
+     if not Assigned(frmParametroSistema)
+      then begin
+        frmParametroSistema := TfrmParametroSistema.Create(self);
+        frmParametroSistema.Parent := pnlForms;
+        frmParametroSistema.WindowState := wsNormal;
+
+      end;
+     //lblTitulo.Caption := 'Cadastro : Cliente';
+     frmParametroSistema.Left := 10;
+     frmParametroSistema.Top := 10;
+     lboLista.Visible := False;
+     frmParametroSistema.Show;
+   end
    else if Copy(lboLista.Items.Text,1,4)= '2.1.' then
    begin
      if not Assigned(frmCadCliente)
@@ -258,13 +273,18 @@ end;
 
 procedure TfrmMain.Empresa1Click(Sender: TObject);
 begin
-try
- //  dmdata.qryEmpresa.Edit;
-  // chamafrm(TfrmCadEmpresa, self);
-except on E:EDBEngineError do
-          MessageDlg('ERRO NO SISTEMA !!! Código do erro '+IntToStr(E.Errors[0].ErrorCode)+' = '+E.Errors[0].Message
-          ,mtError,[mbOK],0);
-       end;
+  if not Assigned(frmParametroSistema)
+   then begin
+     frmParametroSistema := TfrmParametroSistema.Create(self);
+     frmParametroSistema.Parent := pnlForms;
+     frmParametroSistema.WindowState := wsNormal;
+
+   end;
+  //lblTitulo.Caption := 'Cadastro : Cliente';
+  frmParametroSistema.Left := 10;
+  frmParametroSistema.Top := 10;
+  lboLista.Visible := False;
+  frmParametroSistema.Show;
 end;
 
 
@@ -475,6 +495,11 @@ end;
 procedure TfrmMain.N22Contratantes1Click(Sender: TObject);
 begin
   chamafrm(TfrmCadContratante, self, pnlForms);
+end;
+
+procedure TfrmMain.N34Lote2Click(Sender: TObject);
+begin
+  ShowMessage(Application.Title);
 end;
 
 end.

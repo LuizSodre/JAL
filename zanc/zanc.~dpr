@@ -33,6 +33,5 @@ begin
   Application.Initialize;
   Application.CreateForm(Tdata, data);
   Application.CreateForm(TfrmMain, frmMain);
-  Application.CreateForm(TfrmConsCliente, frmConsCliente);
   Application.Run;
 end.

@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Buttons, StdCtrls;
+  Dialogs, Buttons, StdCtrls, Menus;
 
 type
   TMainForm = class(TForm)
@@ -12,8 +12,18 @@ type
     btnPesquisarContato: TBitBtn;
     btnPesquisarCidade: TBitBtn;
     btnFechar: TBitBtn;
+    mm1: TMainMenu;
+    mnuCadastro: TMenuItem;
+    mnuConsulta: TMenuItem;
+    mnuRelatorio: TMenuItem;
+    mnuSair: TMenuItem;
+    mnuCadContato: TMenuItem;
+    mnuCadCidade: TMenuItem;
+    mnuConsContato: TMenuItem;
+    mnuConsCidade: TMenuItem;
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure FormActivate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -40,6 +50,12 @@ begin
      Clipboard.AsText := PressOPFService.CreateDatabaseStatement;
      ShowMessage('Metadata do banco de dados copiado para o Clipboard');
    end;
+end;
+
+procedure TMainForm.FormActivate(Sender: TObject);
+begin
+  Self.Top := 0;
+  Self.Left := (Screen.Width div 2) - (Self.Width div 2);
 end;
 
 end.

@@ -1,11 +1,9 @@
 object CustomEditForm: TCustomEditForm
   Left = 359
   Top = 202
-  BorderIcons = [biSystemMenu]
-  BorderStyle = bsSingle
+  Width = 541
+  Height = 390
   Caption = 'CustomEditForm'
-  ClientHeight = 352
-  ClientWidth = 525
   Color = clBtnFace
   Font.Charset = ANSI_CHARSET
   Font.Color = clWindowText
