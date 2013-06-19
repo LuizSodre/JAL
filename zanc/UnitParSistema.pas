@@ -24,7 +24,6 @@ type
     edtCatalogo: TEdit;
     btnOk: TBitBtn;
     btnCancelar: TBitBtn;
-    btn1: TButton;
     procedure btnOkClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);

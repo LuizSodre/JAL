@@ -10,6 +10,20 @@ type
   Tdata = class(TDataModule)
     conDBZanc: TZConnection;
     zqryZanc: TZQuery;
+    lrgntfldZancId: TLargeintField;
+    strngfldZancNome: TStringField;
+    strngfldZancTpPessoa: TStringField;
+    strngfldZancCpfCnpj: TStringField;
+    strngfldZancEndereco: TStringField;
+    strngfldZancNumero: TStringField;
+    strngfldZancComplemento: TStringField;
+    strngfldZancBairro: TStringField;
+    strngfldZancMunicipio: TStringField;
+    strngfldZancUF: TStringField;
+    strngfldZancTelefone: TStringField;
+    strngfldZancFax: TStringField;
+    strngfldZancEmail: TStringField;
+    strngfldZancCep: TStringField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

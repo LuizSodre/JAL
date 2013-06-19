@@ -163,13 +163,4 @@ object frmParametroSistema: TfrmParametroSistema
       0000}
     NumGlyphs = 2
   end
-  object btn1: TButton
-    Left = 352
-    Top = 104
-    Width = 75
-    Height = 25
-    Caption = 'btn1'
-    TabOrder = 8
-    OnClick = btn1Click
-  end
 end

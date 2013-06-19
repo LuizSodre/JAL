@@ -25,7 +25,10 @@ uses
   Cliente_DAO in 'Cliente_DAO.pas',
   Cliente_MDL in 'Cliente_MDL.pas',
   UntConsGenerico in 'UntConsGenerico.pas' {frmConsGenerico},
-  untConsCliente in 'untConsCliente.pas' {frmConsCliente};
+  untConsCliente in 'untConsCliente.pas' {frmConsCliente},
+  UnitLibrary in 'UnitLibrary.pas',
+  UnitParSistema in 'UnitParSistema.pas' {frmParametroSistema},
+  UnitPreviewRel in 'UnitPreviewRel.pas' {frmPreviewRel};
 
 {$R *.res}
 

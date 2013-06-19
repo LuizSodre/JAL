@@ -27,7 +27,8 @@ uses
   UntConsGenerico in 'UntConsGenerico.pas' {frmConsGenerico},
   untConsCliente in 'untConsCliente.pas' {frmConsCliente},
   UnitLibrary in 'UnitLibrary.pas',
-  UnitParSistema in 'UnitParSistema.pas' {frmParametroSistema};
+  UnitParSistema in 'UnitParSistema.pas' {frmParametroSistema},
+  UnitPreviewRel in 'UnitPreviewRel.pas' {frmPreviewRel};
 
 {$R *.res}
 

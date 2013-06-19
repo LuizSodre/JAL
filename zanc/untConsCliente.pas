@@ -5,7 +5,9 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UntConsGenerico, StdCtrls, ComCtrls, Grids, Buttons, ExtCtrls,
-  Cliente_MDL, Cliente_DAO, Constantes;
+  Cliente_MDL, Cliente_DAO, Constantes, FR_Class, FR_DSet, FR_DBSet, RpCon,
+  RpConDS, RpConBDE, RpDefine, RpRave, DB, ZAbstractRODataset, ZDataset,
+  FR_OLE;
 
 const
   //Campos do Grid
@@ -27,7 +29,14 @@ const
 
 type
   TfrmConsCliente = class(TfrmConsGenerico)
+    BitBtn2: TBitBtn;
+    frprt1: TfrReport;
+    frdbdtst1: TfrDBDataSet;
+    zrdnlyqry1: TZReadOnlyQuery;
+    frsrdtst1: TfrUserDataset;
+    frlbjct1: TfrOLEObject;
     procedure btnCancelarClick(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
   private
     { Private declarations }
   protected
@@ -46,7 +55,7 @@ var
 
 implementation
 
-uses UnitCadCliente, unitMain;
+uses UnitCadCliente, unitMain, dmdata, UnitPreviewRel;
 
 {$R *.dfm}
 
@@ -189,6 +198,21 @@ procedure TfrmConsCliente.btnCancelarClick(Sender: TObject);
 begin
   inherited;
   Close;
+end;
+
+procedure TfrmConsCliente.BitBtn2Click(Sender: TObject);
+begin
+  inherited;
+  if not data.conDBZanc.Connected
+   then data.conDBZanc.Connect;
+  zrdnlyqry1.Open;
+  //frprt1.PrepareReport;
+
+  frprt1.LoadFromFile(ExtractFilePath(Application.ExeName) + 'Untitled.frf');
+  frprt1.ShowReport;
+  //frmPreviewRel.ShowModal;
+  if data.conDBZanc.Connected
+   then data.conDBZanc.Disconnect;
 end;
 
 end.
