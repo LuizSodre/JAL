@@ -30,6 +30,7 @@ uses
     procedure _PROC_00514444(Sender : TObject);
     procedure _PROC_0051444C(Sender : TObject);
     procedure _PROC_0051451E(Sender : TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
   public
@@ -952,6 +953,15 @@ begin
 005146D1   C3                     ret
 
 *)
+end;
+
+procedure TfrmCadGenerico.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+  if key = #13
+   then begin
+     key := #0;
+     PostMessage(handle, WM_KEYDOWN, VK_TAB, 1);
+   end;
 end;
 
 end.

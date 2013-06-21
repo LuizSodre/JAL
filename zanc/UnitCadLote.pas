@@ -14,33 +14,35 @@ type
     Label1: TLabel;
     Label2: TLabel;
     edtNomeArquivo: TEdit;
-    Label3: TLabel;
-    Label4: TLabel;
-    Label5: TLabel;
     cmbContratantes: TComboBox;
     Label6: TLabel;
-    dtpDtEntrada: TDateTimePicker;
-    dtpDtEnvioHigiene: TDateTimePicker;
-    dtpRetornoHigiene: TDateTimePicker;
-    Label7: TLabel;
-    Label8: TLabel;
-    Label9: TLabel;
-    dtpDtEnvioImpressao: TDateTimePicker;
-    dtpDtEnvioPostagem: TDateTimePicker;
-    dtpDtPostagem: TDateTimePicker;
     Label10: TLabel;
     cmbClientes: TComboBox;
     edtId: TEdit;
     Label11: TLabel;
     edtAno: TEdit;
-    edt1: TDateEdit;
-    Button1: TButton;
-    MaskEdit1: TMaskEdit;
-    Button2: TButton;
     lblTitulo: TLabel;
     Label14: TLabel;
     Label12: TLabel;
     Label13: TLabel;
+    GroupBox1: TGroupBox;
+    edtHoraEntrada: TMaskEdit;
+    GroupBox2: TGroupBox;
+    edtHoraEnvioHigi: TMaskEdit;
+    GroupBox3: TGroupBox;
+    medtHoraRetornoHigi: TMaskEdit;
+    GroupBox4: TGroupBox;
+    medtHoraEnvioImpress: TMaskEdit;
+    GroupBox5: TGroupBox;
+    medtHoraEnvioPostagem: TMaskEdit;
+    GroupBox6: TGroupBox;
+    medtHoraPostagem: TMaskEdit;
+    edtDtEntrada: TMaskEdit;
+    edtEnvioHigi: TMaskEdit;
+    edtRetornoHigi: TMaskEdit;
+    medtEnvioImpress: TMaskEdit;
+    edtEnvioPostagem: TMaskEdit;
+    edtDtPostagem: TMaskEdit;
     procedure cmbContratantesDropDown(Sender: TObject);
     procedure btnConfirmarClick(Sender: TObject);
     procedure cmbClientesDropDown(Sender: TObject);
@@ -48,10 +50,18 @@ type
     procedure Button2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure cmbContratantesEnter(Sender: TObject);
   private
     { Private declarations }
     procedure LoadCombos;
+    procedure LoadComboCliente;
+    procedure LoadComboContratante;
     function GetIdByCombo(const prCombo : TComboBox) : Integer;
+    function GetIndexByCombo(const prCombo : TComboBox; prId : Integer) : Integer;
+    procedure LimpaCampos;
+    function ConcatenaDataHora(prData, prHora : String) : TDateTime;
+    procedure SeparaDataHora(var prEditData, prEditHora : TMaskEdit; prDataHora : TDateTime);
   public
     { Public declarations }
     procedure LoadLoteToControls(prLote : TLote);
@@ -71,17 +81,18 @@ procedure TfrmCadLote.LoadLoteToControls(prLote: TLote);
 
 begin
   edtId.Text := IntToStr(prLote.Id);
-  edtOrdemServico.Text  := prLote.OrdemServico;
-  edtNomeArquivo.Text   := prLote.NomeArquivo;
-  edtAno.Text           := IntToStr(prLote.Ano);
-  cmbContratantes.Text  := ''; {localizar pela id}
-  cmbClientes.Text      := ''; {localizar pela id}
-  dtpDtEntrada.DateTime := prLote.DtEntrada;
-  dtpDtEnvioHigiene.DateTime   := prLote.DtEnvioHigiene;
-  dtpRetornoHigiene.DateTime   := prLote.DtRetornoHigiene;
-  dtpDtEnvioImpressao.DateTime := prLote.DtEnvioImpressao;
-  dtpDtEnvioPostagem.DateTime  := prLote.DtEnvioPostagem;
-  dtpDtPostagem.DateTime       := prLote.DtPostagem;
+  edtOrdemServico.Text      := prLote.OrdemServico;
+  edtNomeArquivo.Text       := prLote.NomeArquivo;
+  edtAno.Text               := IntToStr(prLote.Ano);
+  cmbContratantes.ItemIndex := GetIndexByCombo(cmbContratantes, prLote.IdContratante);
+  cmbClientes.ItemIndex     := GetIndexByCombo(cmbClientes, prLote.IdCliente);
+
+  SeparaDataHora(edtDtEntrada,edtHoraEntrada, prLote.DtEntrada);
+  SeparaDataHora(edtEnvioHigi,edtHoraEnvioHigi, prLote.DtEntrada);
+  SeparaDataHora(edtRetornoHigi,medtHoraRetornoHigi, prLote.DtEntrada);
+  SeparaDataHora(medtEnvioImpress,medtHoraEnvioImpress, prLote.DtEntrada);
+  SeparaDataHora(edtEnvioPostagem,medtHoraEnvioPostagem, prLote.DtEntrada);
+  SeparaDataHora(edtDtPostagem,medtHoraPostagem, prLote.DtEntrada);
 end;
 
 function TfrmCadLote.LoadLoteFromControls: TLote;
@@ -95,14 +106,15 @@ begin
 
   Lote.OrdemServico     := edtOrdemServico.Text;
   Lote.NomeArquivo      := edtNomeArquivo.Text;
-  Lote.IdContratante    := 0{Carregar o ID};
-  Lote.IdCliente        := 0{Carregar o ID};
-  Lote.DtEntrada        := dtpDtEntrada.DateTime;
-  Lote.DtEnvioHigiene   := dtpDtEnvioHigiene.DateTime;
-  Lote.DtRetornoHigiene := dtpRetornoHigiene.DateTime;
-  Lote.DtEnvioImpressao := dtpDtEnvioImpressao.DateTime;
-  Lote.DtEnvioPostagem  := dtpDtEnvioPostagem.DateTime;
-  Lote.DtPostagem       := dtpDtPostagem.DateTime;
+  Lote.IdContratante    := GetIdByCombo(cmbContratantes);
+  Lote.IdCliente        := GetIdByCombo(cmbClientes);
+
+  Lote.DtEntrada        := ConcatenaDataHora(edtDtEntrada.Text    ,edtHoraEntrada.Text);
+  Lote.DtEnvioHigiene   := ConcatenaDataHora(edtEnvioHigi.Text    ,edtHoraEnvioHigi.Text);
+  Lote.DtRetornoHigiene := ConcatenaDataHora(edtRetornoHigi.Text  ,medtHoraRetornoHigi.Text);
+  Lote.DtEnvioImpressao := ConcatenaDataHora(medtEnvioImpress.Text,medtHoraEnvioImpress.Text);
+  Lote.DtEnvioPostagem  := ConcatenaDataHora(edtEnvioPostagem.Text,medtHoraEnvioPostagem.Text);
+  Lote.DtPostagem       := ConcatenaDataHora(edtDtPostagem.Text   ,medtHoraPostagem.Text);
   Lote.Ano              := StrToIntDef(edtAno.Text, 0);
 
   Result := Lote;
@@ -161,18 +173,18 @@ var
   i : Integer;
 begin
   inherited;
-  {data := edt1.Date;
-  data := data + StrToTime(MaskEdit1.Text);
-  ShowMessage(FormatDateTime('ddmmyy hhmm',data));}
-  daocli := TCliente_DAO.Create;
+  data := StrToDate(edtDtEntrada.Text);
+  data := data + StrToTime(edtHoraEntrada.Text);
+  ShowMessage(FormatDateTime('dd;mm;yy hhmm',data));
+{  daocli := TCliente_DAO.Create;
   listacli := daocli.getAll;
   cmbClientes.Clear;
   for i := 0 to pred(listacli.Count) do
   begin
     cmbClientes.AddItem(TCliente(listacli[i]).Nome,TCliente(listacli[i]));
 {    cmbClientes.Items.Add(TCliente(listacli[i]).Nome);
-    cmbClientes.Items.AddObject(TCliente(listacli[i]).Nome, TCliente(listacli[i]));}
-  end;
+    cmbClientes.Items.AddObject(TCliente(listacli[i]).Nome, TCliente(listacli[i]));
+  end;}
 end;
 
 procedure TfrmCadLote.Button2Click(Sender: TObject);
@@ -229,12 +241,107 @@ end;
 procedure TfrmCadLote.FormCreate(Sender: TObject);
 begin
   inherited;
+  LimpaCampos;
   LoadCombos;
 end;
 
 procedure TfrmCadLote.btnCancelarClick(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TfrmCadLote.LimpaCampos;
+begin
+  edtDtEntrada.Text := NO_STRING;
+  edtHoraEntrada.Text := NO_STRING;
+end;
+
+function TfrmCadLote.ConcatenaDataHora(prData, prHora: String): TDateTime;
+var
+  data : TDateTime;
+begin
+  Result := 0;
+  if (prData <> NO_DATESTRING) and (prHora <> NO_DATESTRING)
+   then begin
+     data := StrToDate(prData);
+     data := data + StrToTime(prHora);
+     Result := data;
+   end;
+
+end;
+
+procedure TfrmCadLote.SeparaDataHora(var prEditData, prEditHora: TMaskEdit;
+  prDataHora: TDateTime);
+begin
+  if Assigned(prEditData)
+   then TMaskEdit(prEditData).Text := FormatDateTime('dd/mm/yyyy', prDataHora);
+
+  if Assigned(prEditHora)
+   then TMaskEdit(prEditHora).Text := FormatDateTime('hh:mm', prDataHora);
+end;
+
+function TfrmCadLote.GetIndexByCombo(const prCombo: TComboBox; prId : Integer): Integer;
+var
+  i : integer;
+begin
+  Result := -1;
+  for i := 0 to pred(prCombo.Items.Count) do
+  begin
+    if TBase(prCombo.Items.Objects[i]).Id = prId
+     then Result := i;
+  end;
+end;
+
+procedure TfrmCadLote.FormShow(Sender: TObject);
+begin
+  inherited;
+  edtOrdemServico.SetFocus;
+end;
+
+procedure TfrmCadLote.LoadComboCliente;
+var
+  ClienteList : TList;
+  Cliente_DAO : TCliente_DAO;
+  Interador : Integer;
+begin
+  Cliente_DAO := TCliente_DAO.Create;
+  try
+  ClienteList := Cliente_DAO.getAll;
+  cmbClientes.Clear;
+  for Interador := 0 to pred(ClienteList.Count) do
+  begin
+    cmbClientes.AddItem(TCliente(ClienteList[Interador]).Nome,TCliente(ClienteList[Interador]));
+  end;
+  finally
+    FreeAndNil(Cliente_DAO);
+  end;
+end;
+
+procedure TfrmCadLote.LoadComboContratante;
+var
+  ContratanteList : TList;
+  Contratante_DAO : TContratante_DAO;
+  Interador : Integer;
+begin
+  //Carregando a combo de Contratante
+  Contratante_DAO := TContratante_DAO.Create;
+  try
+  ContratanteList := Contratante_DAO.getAll;
+  cmbContratantes.Clear;
+  for Interador := 0 to pred(ContratanteList.Count) do
+  begin
+    cmbContratantes.AddItem(TContratante(ContratanteList[Interador]).Nome,TContratante(ContratanteList[Interador]));
+  end;
+  finally
+    FreeAndNil(Contratante_DAO);
+  end;
+end;
+
+procedure TfrmCadLote.cmbContratantesEnter(Sender: TObject);
+begin
+  inherited;
+  if cmbContratantes.ItemIndex = -1
+   then LoadComboContratante;
 end;
 
 end.

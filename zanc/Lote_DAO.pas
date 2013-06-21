@@ -129,12 +129,30 @@ begin
      qryExec.ParamByName('Id_cliente').AsInteger               := prLote.IdCliente;
      qryExec.ParamByName('OrdemServico').AsString              := prLote.OrdemServico;
      qryExec.ParamByName('NomeArquivo').AsString               := prLote.NomeArquivo;
-     qryExec.ParamByName('dt_criacao').AsDateTime              := prLote.DtEntrada;
-     qryExec.ParamByName('dt_envio_higienizacao').AsDateTime   := prLote.DtEnvioHigiene;
-     qryExec.ParamByName('dt_retorno_higienizacao').AsDateTime := prLote.DtRetornoHigiene;
-     qryExec.ParamByName('dt_envio_impressao').AsDateTime      := prLote.DtEnvioImpressao;
-     qryExec.ParamByName('dt_envio_postagem').AsDateTime       := prLote.DtEnvioPostagem;
-     qryExec.ParamByName('dt_postagem').AsDateTime             := prLote.DtPostagem;
+     if prLote.DtEntrada > 0
+      then qryExec.ParamByName('dt_criacao').AsDateTime        := prLote.DtEntrada
+      else qryExec.ParamByName('dt_criacao').DataType          := ftDateTime;
+
+     if prLote.DtEnvioHigiene > 0
+      then qryExec.ParamByName('dt_envio_higienizacao').AsDateTime   := prLote.DtEnvioHigiene
+      else qryExec.ParamByName('dt_envio_higienizacao').DataType          := ftDateTime;
+
+     if  prLote.DtRetornoHigiene > 0
+      then qryExec.ParamByName('dt_retorno_higienizacao').AsDateTime := prLote.DtRetornoHigiene
+      else qryExec.ParamByName('dt_retorno_higienizacao').DataType          := ftDateTime;
+
+     if prLote.DtEnvioImpressao > 0
+      then qryExec.ParamByName('dt_envio_impressao').AsDateTime      := prLote.DtEnvioImpressao
+      else qryExec.ParamByName('dt_envio_impressao').DataType          := ftDateTime;
+
+     if prLote.DtEnvioPostagem > 0
+      then qryExec.ParamByName('dt_envio_postagem').AsDateTime       := prLote.DtEnvioPostagem
+      else qryExec.ParamByName('dt_envio_postagem').DataType          := ftDateTime;
+
+     if prLote.DtPostagem > 0
+      then qryExec.ParamByName('dt_postagem').AsDateTime             := prLote.DtPostagem
+      else qryExec.ParamByName('dt_postagem').DataType          := ftDateTime;
+
      qryExec.ParamByName('Ano').AsInteger                      := prLote.Ano;
 
      data.conDBZanc.StartTransaction;

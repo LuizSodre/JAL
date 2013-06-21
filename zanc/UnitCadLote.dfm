@@ -4,6 +4,7 @@ inherited frmCadLote: TfrmCadLote
   BorderStyle = bsNone
   Caption = 'Cadastro de lote'
   ClientHeight = 399
+  ClientWidth = 691
   OldCreateOrder = True
   Position = poDefaultSizeOnly
   OnCreate = FormCreate
@@ -37,6 +38,7 @@ inherited frmCadLote: TfrmCadLote
     Transparent = True
   end
   inherited pnlGenerico: TPanel
+    Width = 549
     Height = 380
     object Label1: TLabel
       Left = 9
@@ -52,54 +54,12 @@ inherited frmCadLote: TfrmCadLote
       Height = 16
       Caption = 'Nome do Arquivo'
     end
-    object Label3: TLabel
-      Left = 9
-      Top = 241
-      Width = 74
-      Height = 16
-      Caption = 'Dt. Entrada'
-    end
-    object Label4: TLabel
-      Left = 149
-      Top = 240
-      Width = 151
-      Height = 16
-      Caption = 'Envio para higienizacao'
-    end
-    object Label5: TLabel
-      Left = 289
-      Top = 241
-      Width = 156
-      Height = 16
-      Caption = 'Retorno da higienizacao'
-    end
     object Label6: TLabel
       Left = 9
       Top = 136
       Width = 87
       Height = 16
       Caption = 'Contratantes'
-    end
-    object Label7: TLabel
-      Left = 9
-      Top = 286
-      Width = 138
-      Height = 16
-      Caption = 'Envio para impress'#227'o'
-    end
-    object Label8: TLabel
-      Left = 149
-      Top = 285
-      Width = 136
-      Height = 16
-      Caption = 'Envio para postagem'
-    end
-    object Label9: TLabel
-      Left = 289
-      Top = 286
-      Width = 87
-      Height = 16
-      Caption = 'Dt. Postagem'
     end
     object Label10: TLabel
       Left = 9
@@ -154,7 +114,7 @@ inherited frmCadLote: TfrmCadLote
       Top = 105
       Width = 400
       Height = 24
-      TabOrder = 1
+      TabOrder = 2
     end
     object cmbContratantes: TComboBox
       Left = 9
@@ -162,68 +122,9 @@ inherited frmCadLote: TfrmCadLote
       Width = 400
       Height = 24
       ItemHeight = 16
-      TabOrder = 2
-      OnDropDown = cmbContratantesDropDown
-    end
-    object dtpDtEntrada: TDateTimePicker
-      Left = 8
-      Top = 257
-      Width = 120
-      Height = 24
-      Date = 0.561473182868212500
-      Format = 'hh:mm'
-      Time = 0.561473182868212500
       TabOrder = 3
-    end
-    object dtpDtEnvioHigiene: TDateTimePicker
-      Left = 148
-      Top = 257
-      Width = 120
-      Height = 24
-      Date = 0.561473182868212500
-      Format = 'DD/MM/yyyy HH:mm'
-      Time = 0.561473182868212500
-      TabOrder = 4
-    end
-    object dtpRetornoHigiene: TDateTimePicker
-      Left = 288
-      Top = 257
-      Width = 120
-      Height = 24
-      Date = 0.561473182868212500
-      Format = 'DD/MM/yyyy HH:mm'
-      Time = 0.561473182868212500
-      TabOrder = 5
-    end
-    object dtpDtEnvioImpressao: TDateTimePicker
-      Left = 8
-      Top = 303
-      Width = 120
-      Height = 24
-      Date = 0.561473182868212500
-      Format = 'DD/MM/yyyy HH:mm'
-      Time = 0.561473182868212500
-      TabOrder = 6
-    end
-    object dtpDtEnvioPostagem: TDateTimePicker
-      Left = 148
-      Top = 303
-      Width = 120
-      Height = 24
-      Date = 0.561473182868212500
-      Format = 'DD/MM/yyyy HH:mm'
-      Time = 0.561473182868212500
-      TabOrder = 7
-    end
-    object dtpDtPostagem: TDateTimePicker
-      Left = 288
-      Top = 303
-      Width = 120
-      Height = 24
-      Date = 0.561473182868212500
-      Format = 'DD/MM/yyyy HH:mm'
-      Time = 0.561473182868212500
-      TabOrder = 8
+      OnDropDown = cmbContratantesDropDown
+      OnEnter = cmbContratantesEnter
     end
     object cmbClientes: TComboBox
       Left = 9
@@ -231,7 +132,7 @@ inherited frmCadLote: TfrmCadLote
       Width = 400
       Height = 24
       ItemHeight = 16
-      TabOrder = 9
+      TabOrder = 4
       OnDropDown = cmbClientesDropDown
     end
     object edtId: TEdit
@@ -240,7 +141,7 @@ inherited frmCadLote: TfrmCadLote
       Width = 21
       Height = 24
       TabStop = False
-      TabOrder = 10
+      TabOrder = 5
       Visible = False
     end
     object edtAno: TEdit
@@ -248,56 +149,189 @@ inherited frmCadLote: TfrmCadLote
       Top = 57
       Width = 47
       Height = 24
+      TabOrder = 1
+    end
+    object GroupBox1: TGroupBox
+      Left = 9
+      Top = 231
+      Width = 170
+      Height = 57
+      Caption = 'Dt. Entrada'
+      TabOrder = 6
+      object edtHoraEntrada: TMaskEdit
+        Left = 120
+        Top = 22
+        Width = 41
+        Height = 24
+        EditMask = '!90:00;1;'
+        MaxLength = 5
+        TabOrder = 1
+        Text = '  :  '
+      end
+      object edtDtEntrada: TMaskEdit
+        Left = 8
+        Top = 22
+        Width = 102
+        Height = 24
+        EditMask = '99/99/0000;1;_'
+        MaxLength = 10
+        TabOrder = 0
+        Text = '  /  /    '
+      end
+    end
+    object GroupBox2: TGroupBox
+      Left = 186
+      Top = 231
+      Width = 170
+      Height = 57
+      Caption = 'Envio para higienizacao'
+      TabOrder = 7
+      object edtHoraEnvioHigi: TMaskEdit
+        Left = 120
+        Top = 22
+        Width = 41
+        Height = 24
+        EditMask = '!90:00;1;'
+        MaxLength = 5
+        TabOrder = 1
+        Text = '  :  '
+      end
+      object edtEnvioHigi: TMaskEdit
+        Left = 8
+        Top = 22
+        Width = 102
+        Height = 24
+        EditMask = '99/99/0000;1;_'
+        MaxLength = 10
+        TabOrder = 0
+        Text = '  /  /    '
+      end
+    end
+    object GroupBox3: TGroupBox
+      Left = 363
+      Top = 231
+      Width = 170
+      Height = 57
+      Caption = 'Retorno da higienizacao'
+      TabOrder = 8
+      object medtHoraRetornoHigi: TMaskEdit
+        Left = 120
+        Top = 22
+        Width = 41
+        Height = 24
+        EditMask = '!90:00;1;'
+        MaxLength = 5
+        TabOrder = 1
+        Text = '  :  '
+      end
+      object edtRetornoHigi: TMaskEdit
+        Left = 8
+        Top = 22
+        Width = 102
+        Height = 24
+        EditMask = '99/99/0000;1;_'
+        MaxLength = 10
+        TabOrder = 0
+        Text = '  /  /    '
+      end
+    end
+    object GroupBox4: TGroupBox
+      Left = 9
+      Top = 289
+      Width = 170
+      Height = 57
+      Caption = 'Envio para impress'#227'o'
+      TabOrder = 9
+      object medtHoraEnvioImpress: TMaskEdit
+        Left = 120
+        Top = 22
+        Width = 41
+        Height = 24
+        EditMask = '!90:00;1;'
+        MaxLength = 5
+        TabOrder = 1
+        Text = '  :  '
+      end
+      object medtEnvioImpress: TMaskEdit
+        Left = 8
+        Top = 22
+        Width = 102
+        Height = 24
+        EditMask = '99/99/0000;1;_'
+        MaxLength = 10
+        TabOrder = 0
+        Text = '  /  /    '
+      end
+    end
+    object GroupBox5: TGroupBox
+      Left = 185
+      Top = 289
+      Width = 170
+      Height = 57
+      Caption = 'Envio para postagem'
+      TabOrder = 10
+      object medtHoraEnvioPostagem: TMaskEdit
+        Left = 120
+        Top = 22
+        Width = 41
+        Height = 24
+        EditMask = '!90:00;1;'
+        MaxLength = 5
+        TabOrder = 1
+        Text = '  :  '
+      end
+      object edtEnvioPostagem: TMaskEdit
+        Left = 8
+        Top = 22
+        Width = 102
+        Height = 24
+        EditMask = '99/99/0000;1;_'
+        MaxLength = 10
+        TabOrder = 0
+        Text = '  /  /    '
+      end
+    end
+    object GroupBox6: TGroupBox
+      Left = 362
+      Top = 289
+      Width = 170
+      Height = 57
+      Caption = 'Dt. Postagem'
       TabOrder = 11
-    end
-    object edt1: TDateEdit
-      Left = 16
-      Top = 336
-      Width = 121
-      Height = 21
-      DefaultToday = True
-      NumGlyphs = 2
-      Weekends = [Mon]
-      YearDigits = dyFour
-      TabOrder = 12
-      Text = '09/06/2013'
-    end
-    object Button1: TButton
-      Left = 264
-      Top = 336
-      Width = 75
-      Height = 25
-      Caption = 'Button1'
-      TabOrder = 13
-      OnClick = Button1Click
-    end
-    object MaskEdit1: TMaskEdit
-      Left = 152
-      Top = 336
-      Width = 41
-      Height = 24
-      EditMask = '!90:00;1;'
-      MaxLength = 5
-      TabOrder = 14
-      Text = '  :  '
-    end
-    object Button2: TButton
-      Left = 352
-      Top = 336
-      Width = 75
-      Height = 25
-      Caption = 'Button2'
-      TabOrder = 15
-      OnClick = Button2Click
+      object medtHoraPostagem: TMaskEdit
+        Left = 120
+        Top = 22
+        Width = 41
+        Height = 24
+        EditMask = '!90:00;1;'
+        MaxLength = 5
+        TabOrder = 1
+        Text = '  :  '
+      end
+      object edtDtPostagem: TMaskEdit
+        Left = 8
+        Top = 22
+        Width = 102
+        Height = 24
+        EditMask = '99/99/0000;1;_'
+        MaxLength = 10
+        TabOrder = 0
+        Text = '  /  /    '
+      end
     end
   end
   inherited StatusBar1: TStatusBar
     Top = 380
+    Width = 691
   end
   inherited Panel1: TPanel
+    Left = 549
     Height = 380
     inherited btnConfirmar: TBitBtn
       Kind = bkCustom
     end
+  end
+  inherited dsGenerico: TDataSource
+    Left = 600
   end
 end
