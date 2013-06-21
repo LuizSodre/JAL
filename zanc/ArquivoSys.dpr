@@ -1,4 +1,4 @@
-program zanc;
+program ArquivoSys;
 
 uses
   Forms,
@@ -38,13 +38,13 @@ uses
 begin
   Application.Initialize;
   Application.Title := 'ArquivoSys';
-  Application.CreateForm(TfrmSplash, frmSplash);
+  frmSplash := TfrmSplash.Create(Application);
   frmSplash.Show;
   frmSplash.Refresh;
   Application.CreateForm(Tdata, data);
-  Sleep(2000);
-  frmSplash.Close;
   Application.CreateForm(TfrmMain, frmMain);
-
+  Sleep(2000);
+  frmSplash.Hide;
+  frmSplash.Free;
   Application.Run;
 end.

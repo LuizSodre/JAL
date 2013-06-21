@@ -9,6 +9,7 @@ type
   public
     function getById(prId : Integer) : TContratante;
     function getAll : TList;
+    function getByCampo(prCampo, prValor : String) : TList;
     function isValido(prContratante : TContratante; var MsgErro : String): Boolean;
     function Gravar(prContratante : TContratante; var MsgErro : String): Boolean;
     function Excluir(prId : Integer; var MsgErro : String) : Boolean;
@@ -69,6 +70,52 @@ begin
   end;
   Result := ListaRetorno;
 end;
+
+function TContratante_DAO.getByCampo(prCampo, prValor: String): TList;
+var
+  qry : TZQuery;
+  Contratante : TContratante;
+  ListaRetorno : TList;
+begin
+  ListaRetorno := TList.Create;
+  ListaRetorno.Clear;
+  qry := TZQuery.Create(nil);
+  try
+    data.conDBZanc.Connect;
+    qry.Connection := data.conDBZanc;
+    qry.SQL.Add('select * from tContratante where ' + prCampo + ' like ''%' + prValor + '%''');
+    qry.Open;
+
+    if not qry.IsEmpty
+     then begin
+       while not qry.Eof do
+       begin
+         Contratante := TContratante.Create;
+         Contratante.Clear;
+         Contratante.Id := qry.fieldbyname('Id').AsInteger;
+         Contratante.Nome := qry.fieldbyname('Nome').AsString;
+         Contratante.TpPessoa := qry.fieldbyname('TpPessoa').AsString;
+         Contratante.CpfCnpj := qry.fieldbyname('CpfCnpj').AsString;
+         Contratante.Endereco := qry.fieldbyname('Endereco').AsString;
+         Contratante.Numero := qry.fieldbyname('Numero').AsString;
+         Contratante.Complemento := qry.fieldbyname('Complemento').AsString;
+         Contratante.Bairro := qry.fieldbyname('Bairro').AsString;
+         Contratante.Municipio := qry.fieldbyname('Municipio').AsString;
+         Contratante.Uf := qry.fieldbyname('Uf').AsString;
+         Contratante.Cep := qry.fieldbyname('Cep').AsString;
+         Contratante.Telefone := qry.fieldbyname('Telefone').AsString;
+         Contratante.Fax := qry.fieldbyname('Fax').AsString;
+         Contratante.Email := qry.fieldbyname('Email').AsString;
+         ListaRetorno.Add(Contratante);
+         qry.Next;
+       end;
+     end;
+  finally
+    FreeAndNil(qry);
+  end;
+  Result := ListaRetorno;
+end;
+
 
 function  TContratante_DAO.getById(prId: Integer): TContratante;
 var

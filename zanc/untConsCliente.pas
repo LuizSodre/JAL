@@ -7,7 +7,7 @@ uses
   Dialogs, UntConsGenerico, StdCtrls, ComCtrls, Grids, Buttons, ExtCtrls,
   Cliente_MDL, Cliente_DAO, Constantes, FR_Class, FR_DSet, FR_DBSet, RpCon,
   RpConDS, RpConBDE, RpDefine, RpRave, DB, ZAbstractRODataset, ZDataset,
-  FR_OLE;
+  FR_OLE, ZAbstractDataset;
 
 const
   //Campos do Grid
@@ -29,14 +29,8 @@ const
 
 type
   TfrmConsCliente = class(TfrmConsGenerico)
-    BitBtn2: TBitBtn;
-    frprt1: TfrReport;
-    frdbdtst1: TfrDBDataSet;
-    zrdnlyqry1: TZReadOnlyQuery;
-    frsrdtst1: TfrUserDataset;
-    frlbjct1: TfrOLEObject;
     procedure btnCancelarClick(Sender: TObject);
-    procedure BitBtn2Click(Sender: TObject);
+    procedure btnImprimirClick(Sender: TObject);
   private
     { Private declarations }
   protected
@@ -46,6 +40,7 @@ type
     procedure PesquisarRegistro; override;
     procedure EditarRegistro; override;
     procedure ExcluirRegistro; override;
+    procedure OpenConsultaRelatrorio; override;
   public
     { Public declarations }
   end;
@@ -67,6 +62,8 @@ var
 begin
   Cliente_DAO := TCliente_DAO.Create;
   try
+    grdConsulta.RowCount := 2;
+    grdConsulta.Rows[1].Clear;
     if edtCampoPesquisa.Text = NO_STRING
      then LoadGridCampos(Cliente_DAO.getAll)
      else LoadGridCampos(Cliente_DAO.getByCampo(cmbCampo.Text, edtCampoPesquisa.Text));
@@ -155,7 +152,8 @@ begin
       inc(LinhaGrid);
       grdConsulta.RowCount := grdConsulta.RowCount + 1;
     end;
-    grdConsulta.RowCount := grdConsulta.RowCount - 1;
+    if prLista.Count > 0
+     then grdConsulta.RowCount := grdConsulta.RowCount - 1;
   end;
 end;
 
@@ -200,19 +198,24 @@ begin
   Close;
 end;
 
-procedure TfrmConsCliente.BitBtn2Click(Sender: TObject);
+procedure TfrmConsCliente.btnImprimirClick(Sender: TObject);
 begin
-  inherited;
-  if not data.conDBZanc.Connected
-   then data.conDBZanc.Connect;
-  zrdnlyqry1.Open;
-  //frprt1.PrepareReport;
+  Imprimir('tcliente');
+end;
 
-  frprt1.LoadFromFile(ExtractFilePath(Application.ExeName) + 'Untitled.frf');
-  frprt1.ShowReport;
-  //frmPreviewRel.ShowModal;
-  if data.conDBZanc.Connected
-   then data.conDBZanc.Disconnect;
+procedure TfrmConsCliente.OpenConsultaRelatrorio;
+begin
+  zQryConsulta.SQL.Clear;
+  if edtCampoPesquisa.Text = NO_STRING
+   then begin
+     zQryConsulta.SQL.Add('SELECT  ID, NOME, IF(TPPESSOA = ''F'', ''FISICA'', IF (TPPESSOA = ''J'', ''JURIDICA'', '''')) AS TPPESSOA, CPFCNPJ  FROM TCLIENTE');
+   end
+   else begin
+     if cmbCampo.ItemIndex = 0
+      then  zQryConsulta.SQL.Add('SELECT ID, NOME, IF(TPPESSOA = ''F'', ''FISICA'', IF (TPPESSOA = ''J'', ''JURIDICA'', '''')) AS TPPESSOA, CPFCNPJ FROM TCLIENTE WHERE ' + cmbCampo.Text + ' = ' + edtCampoPesquisa.Text)
+      else zQryConsulta.SQL.Add('SELECT ID, NOME, IF(TPPESSOA = ''F'', ''FISICA'', IF (TPPESSOA = ''J'', ''JURIDICA'', '''')) AS TPPESSOA, CPFCNPJ FROM TCLIENTE WHERE ' + cmbCampo.Text + ' = ' + QuotedStr(edtCampoPesquisa.Text));
+   end;
+  zQryConsulta.Open;
 end;
 
 end.

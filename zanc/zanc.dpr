@@ -2,6 +2,7 @@ program zanc;
 
 uses
   Forms,
+  SysUtils,
   dmdata in 'dmdata.pas' {data: TDataModule},
   UnitAcesso in 'UnitAcesso.pas' {frmSenha},
   unitAguarde in 'unitAguarde.pas' {frmAguarde},
@@ -25,16 +26,25 @@ uses
   Cliente_DAO in 'Cliente_DAO.pas',
   Cliente_MDL in 'Cliente_MDL.pas',
   UntConsGenerico in 'UntConsGenerico.pas' {frmConsGenerico},
-  untConsCliente in 'untConsCliente.pas' {frmConsCliente},
+  untConsContratante in 'untConsContratante.pas' {frmConsContratante},
   UnitLibrary in 'UnitLibrary.pas',
   UnitParSistema in 'UnitParSistema.pas' {frmParametroSistema},
-  UnitPreviewRel in 'UnitPreviewRel.pas' {frmPreviewRel};
+  UnitPreviewRel in 'UnitPreviewRel.pas' {frmPreviewRel},
+  untConsCliente in 'untConsCliente.pas' {frmConsCliente},
+  UnitSplash in 'UnitSplash.pas' {frmSplash};
 
 {$R *.res}
 
 begin
   Application.Initialize;
+  Application.Title := 'ArquivoSys';
+  frmSplash := TfrmSplash.Create(Application);
+  frmSplash.Show;
+  frmSplash.Refresh;
   Application.CreateForm(Tdata, data);
   Application.CreateForm(TfrmMain, frmMain);
+  Sleep(2000);
+  frmSplash.Hide;
+  frmSplash.Free;
   Application.Run;
 end.

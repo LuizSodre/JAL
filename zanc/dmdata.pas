@@ -44,7 +44,7 @@ var
   vNomeArquivo : string;
 begin
   //application.Name
-  vNomeArquivo := NO_STRING;
+  vNomeArquivo        := NO_STRING;
   vNomeArquivo        := ExtractFilePath(Application.ExeName) + Application.Title;
   vIniFile            := TIniFile.Create(vNomeArquivo + '.INI');
   conDBZanc.HostName  := vIniFile.ReadString('BASE',HOSTNAME,'localhost');

@@ -13,13 +13,11 @@ object data: Tdata
     User = 'zanc'
     Password = '123456'
     Catalog = 'dbzanc'
-    Connected = True
     Left = 40
     Top = 32
   end
   object zqryZanc: TZQuery
     Connection = conDBZanc
-    Active = True
     SQL.Strings = (
       'select * from tcliente')
     Params = <>

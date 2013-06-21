@@ -106,7 +106,7 @@ var
 implementation
 
 uses UnitCadContratante, UnitCadCliente,{UnitCadcontrato,} UnitCadLote,
-  UntConsGenerico, untConsCliente, UnitParSistema;
+  UntConsGenerico, untConsCliente, UnitParSistema, untConsContratante;
 
 {$R *.DFM}
 
@@ -144,6 +144,9 @@ begin
 
   if Assigned(frmConsCliente)
    then frmConsCliente.Hide;
+
+  if Assigned(frmParametroSistema)
+   then frmParametroSistema.Hide; 
 
 end;
 
@@ -246,7 +249,21 @@ begin
    end
     //    chamafrm(TfrmCadVistoria, self)
    else if Copy(lboLista.Items.Text,1,4)= '3.2.' then
-      //  chamafrm(TfrmCad2via, self)
+   begin
+     if not Assigned(frmConsContratante)
+      then begin
+        frmConsContratante := TfrmConsContratante.Create(self);
+        frmConsContratante.Parent := pnlForms;
+        frmConsContratante.WindowState := wsNormal;
+        frmConsContratante.StatusBar1.Visible := False;
+      end;
+     frmConsContratante.lblTitulo.Caption := 'Consulta : Contratante';
+     frmConsContratante.lblTituloMascara.Caption := frmConsContratante.lblTitulo.Caption;
+     frmConsContratante.Left := 10;
+     frmConsContratante.Top := 10;
+     lboLista.Visible := False;
+     frmConsContratante.Show;
+   end
    else if Copy(lboLista.Items.Text,1,4)= '3.3.' then
     //    chamafrm(TfrmCadReagendamento, self)
    else if Copy(lboLista.Items.Text,1,4)= '3.4.' then

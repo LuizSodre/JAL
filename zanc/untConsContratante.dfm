@@ -1,4 +1,4 @@
-inherited frmConsCliente: TfrmConsCliente
+inherited frmConsContratante: TfrmConsContratante
   PixelsPerInch = 96
   TextHeight = 16
   inherited pnlGenerico: TPanel
