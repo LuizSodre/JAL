@@ -7,6 +7,7 @@ uses
 
 const
   NO_STRING = '';
+  NO_DATESTRING = '  /  /    ';
   NULL_INTEGER = -2147483640;
   CATALOG      = 'CATALOG';
   DATABASE     = 'DATABASE';

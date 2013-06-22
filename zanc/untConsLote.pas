@@ -1,4 +1,4 @@
-unit untConsCliente;
+unit untConsLote;
 
 interface
 
@@ -9,25 +9,25 @@ uses
   RpConDS, RpConBDE, RpDefine, RpRave, DB, ZAbstractRODataset, ZDataset,
   FR_OLE, ZAbstractDataset;
 
+
 const
   //Campos do Grid
-  Id            = 0;
-  Nome          = 1;
-  TpPessoa      = 2;
-  CpfCnpj       = 3;
-  Endereco      = 4;
-  Numero        = 5;
-  Complemento   = 6;
-  Bairro        = 7;
-  Municipio     = 8;
-  Uf            = 9;
-  Cep           = 10;
-  Telefone      = 11;
-  Fax           = 12;
-  Email         = 13;
+  Id                      =0;
+  OrdemServico            =1;
+  Ano                     =2;
+  Arquivo                 =3;
+  Contratante             =4;
+  Cliente                 =5;
+  Contrato                =6;
+  DtCriacao               =7;
+  DtEnvioHigienizacao     =8;
+  DtRetornoHigienizacao   =9;
+  DtEnvioImpressao        =10;
+  DtEnvioPostagm          =11;
+  DtPostagem              =12;
 
 type
-  TfrmConsCliente = class(TfrmConsGenerico)
+  TfrmConsLote = class(TfrmConsGenerico)
     procedure btnCancelarClick(Sender: TObject);
     procedure btnImprimirClick(Sender: TObject);
   private
@@ -45,7 +45,7 @@ type
   end;
 
 var
-  frmConsCliente: TfrmConsCliente;
+  frmConsLote: TfrmConsLote;
 
 implementation
 
@@ -55,7 +55,7 @@ uses UnitCadCliente, unitMain, dmdata, UnitPreviewRel;
 
 { TfrmConsCliente }
 
-procedure TfrmConsCliente.PesquisarRegistro;
+procedure TfrmConsLote.PesquisarRegistro;
 var
   Cliente_DAO : TCliente_DAO;
 begin
@@ -72,7 +72,7 @@ begin
 
 end;
 
-procedure TfrmConsCliente.LoadComboCampos;
+procedure TfrmConsLote.LoadComboCampos;
 begin
   cmbCampo.Items.Add('Id');
   cmbCampo.Items.Add('Nome');
@@ -80,7 +80,7 @@ begin
   cmbCampo.ItemIndex := 0;
 end;
 
-procedure TfrmConsCliente.EditarRegistro;
+procedure TfrmConsLote.EditarRegistro;
 begin
   if not Assigned(frmCadCliente)
    then begin
@@ -98,7 +98,7 @@ begin
   frmCadCliente.Show;
 end;
 
-procedure TfrmConsCliente.ExcluirRegistro;
+procedure TfrmConsLote.ExcluirRegistro;
 var
   Cliente_DAO : TCliente_DAO;
   vMsgErro : string;
@@ -121,7 +121,7 @@ begin
 
 end;
 
-procedure TfrmConsCliente.LoadGridCampos(prLista : Tlist);
+procedure TfrmConsLote.LoadGridCampos(prLista : Tlist);
 var
   Interador : Integer;
   LinhaGrid : Integer;
@@ -133,21 +133,21 @@ begin
     LinhaGrid := 1;
     for Interador := 0 to pred(prLista.Count) do
     begin
-      grdConsulta.Cells[Id,LinhaGrid]           := IntToStr(TCliente(prLista[Interador]).Id);
-      grdConsulta.Cells[Nome,LinhaGrid]         := TCliente(prLista[Interador]).Nome;
-      grdConsulta.Cells[TpPessoa,LinhaGrid]     := TCliente(prLista[Interador]).TpPessoa;
-      grdConsulta.Cells[CpfCnpj,LinhaGrid]      := TCliente(prLista[Interador]).CpfCnpj;
-      grdConsulta.Cells[Endereco,LinhaGrid]     := TCliente(prLista[Interador]).Endereco;
-      grdConsulta.Cells[Numero,LinhaGrid]       := TCliente(prLista[Interador]).Numero;
-      grdConsulta.Cells[Complemento,LinhaGrid]  := TCliente(prLista[Interador]).Complemento;
-      grdConsulta.Cells[Bairro,LinhaGrid]       := TCliente(prLista[Interador]).Bairro;
-      grdConsulta.Cells[Municipio,LinhaGrid]    := TCliente(prLista[Interador]).Municipio;
-      grdConsulta.Cells[Uf,LinhaGrid]           := TCliente(prLista[Interador]).Uf;
-      grdConsulta.Cells[Cep,LinhaGrid]          := TCliente(prLista[Interador]).Cep;
-      grdConsulta.Cells[Telefone,LinhaGrid]     := TCliente(prLista[Interador]).Telefone;
-      grdConsulta.Cells[Fax,LinhaGrid]          := TCliente(prLista[Interador]).Fax;
-      grdConsulta.Cells[Email,LinhaGrid]        := TCliente(prLista[Interador]).Email;
-      grdConsulta.Objects[Id, LinhaGrid] := TCliente(prLista[Interador]);
+      grdConsulta.Cells[Id          ,LinhaGrid]           := IntToStr(TCliente(prLista[Interador]).Id);
+{      grdConsulta.Cells[Nome        ,LinhaGrid]         := TCliente(prLista[Interador]).Nome;
+      grdConsulta.Cells[TpPessoa    ,LinhaGrid]     := TCliente(prLista[Interador]).TpPessoa;
+      grdConsulta.Cells[CpfCnpj     ,LinhaGrid]      := TCliente(prLista[Interador]).CpfCnpj;
+      grdConsulta.Cells[Endereco    ,LinhaGrid]     := TCliente(prLista[Interador]).Endereco;
+      grdConsulta.Cells[Numero      ,LinhaGrid]       := TCliente(prLista[Interador]).Numero;
+      grdConsulta.Cells[Complemento ,LinhaGrid]  := TCliente(prLista[Interador]).Complemento;
+      grdConsulta.Cells[Bairro      ,LinhaGrid]       := TCliente(prLista[Interador]).Bairro;
+      grdConsulta.Cells[Municipio   ,LinhaGrid]    := TCliente(prLista[Interador]).Municipio;
+      grdConsulta.Cells[Uf          ,LinhaGrid]           := TCliente(prLista[Interador]).Uf;
+      grdConsulta.Cells[Cep         ,LinhaGrid]          := TCliente(prLista[Interador]).Cep;
+      grdConsulta.Cells[Telefone    ,LinhaGrid]     := TCliente(prLista[Interador]).Telefone;
+      grdConsulta.Cells[Fax         ,LinhaGrid]          := TCliente(prLista[Interador]).Fax;
+      grdConsulta.Cells[Email       ,LinhaGrid]        := TCliente(prLista[Interador]).Email;}
+      grdConsulta.Objects[Id        , LinhaGrid] := TCliente(prLista[Interador]);
       inc(LinhaGrid);
       grdConsulta.RowCount := grdConsulta.RowCount + 1;
     end;
@@ -156,20 +156,20 @@ begin
   end;
 end;
 
-procedure TfrmConsCliente.SetupGridCampos;
+procedure TfrmConsLote.SetupGridCampos;
 begin
   inherited;
-  grdConsulta.ColCount := 14;
+  grdConsulta.ColCount := 13;
   grdConsulta.RowCount := 2;
   grdConsulta.Cols[Id].SetText('Id');
   grdConsulta.ColWidths[Id] := 50;
-  grdConsulta.Cols[Nome].SetText('Nome');
+  grdConsulta.Cols[Nome].SetText('OS');
   grdConsulta.ColWidths[Nome] := 250;
-  grdConsulta.Cols[tpPessoa].SetText('Tipo Pessoa');
+  grdConsulta.Cols[tpPessoa].SetText('Ano');
   grdConsulta.ColWidths[tpPessoa] := 120;
-  grdConsulta.Cols[CpfCnpj].SetText('CPF / CNPJ');
+  grdConsulta.Cols[CpfCnpj].SetText('Contratante');
   grdConsulta.ColWidths[CpfCnpj] := 150;
-  grdConsulta.Cols[Endereco].SetText('Endereco');
+  grdConsulta.Cols[Endereco].SetText('Cliente');
   grdConsulta.ColWidths[Endereco] := 350;
   grdConsulta.Cols[Numero].SetText('Número');
   grdConsulta.ColWidths[Numero] := 100;
@@ -191,18 +191,18 @@ begin
   grdConsulta.ColWidths[Email] := 450;
 end;
 
-procedure TfrmConsCliente.btnCancelarClick(Sender: TObject);
+procedure TfrmConsLote.btnCancelarClick(Sender: TObject);
 begin
   inherited;
   Close;
 end;
 
-procedure TfrmConsCliente.btnImprimirClick(Sender: TObject);
+procedure TfrmConsLote.btnImprimirClick(Sender: TObject);
 begin
   Imprimir('tcliente');
 end;
 
-procedure TfrmConsCliente.OpenConsultaRelatrorio;
+procedure TfrmConsLote.OpenConsultaRelatrorio;
 begin
   zQryConsulta.SQL.Clear;
   if edtCampoPesquisa.Text = NO_STRING

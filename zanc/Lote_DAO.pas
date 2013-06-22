@@ -110,7 +110,7 @@ begin
        qryExec.SQL.Add(' dt_envio_impressao,');
        qryExec.SQL.Add(' dt_envio_postagem,');
        qryExec.SQL.Add(' dt_postagem,');
-       qryExec.SQL.Add(' Ano,');
+       qryExec.SQL.Add(' Ano ');
        qryExec.SQL.Add(') values( ');
        qryExec.SQL.Add(' :Id_contrante,');
        qryExec.SQL.Add(' :Id_cliente,');

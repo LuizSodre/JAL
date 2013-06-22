@@ -328,6 +328,7 @@ inherited frmCadLote: TfrmCadLote
     Left = 549
     Height = 380
     inherited btnConfirmar: TBitBtn
+      ModalResult = 0
       Kind = bkCustom
     end
   end
