@@ -3,12 +3,14 @@ unit Lote_DAO;
 interface
 uses
   Windows, Messages, SysUtils, Variants, TypInfo, ActiveX, Lote_MDL, Classes, Constantes,
-  DB, ADODB, ZConnection, ZAbstractRODataset, ZAbstractDataset, ZDataset;
+  DB, ADODB, ZConnection, ZAbstractRODataset, ZAbstractDataset, ZDataset, Cliente_MDL,
+  Cliente_DAO, Contratante_MDL,Contratante_DAO;
 type
   TLote_DAO = class(TObject)
   public
     function getById(prId : Integer) : TLote;
     function getAll : TList;
+    function getByCampo(prCampo, prValor : String) : TList;
     function isValido(prLote : TLote; var MsgErro : String): Boolean;
     function Gravar(prLote : TLote; var MsgErro : String): Boolean;
     function Excluir(prId : Integer; var MsgErro : String) : Boolean;
@@ -22,22 +24,145 @@ uses dmdata, Base_MDL;
 { TLote_DAO }
 
 function TLote_DAO.Excluir(prId: Integer; var MsgErro: String): Boolean;
+var
+  qryExec : TZQuery;
 begin
-  Result := True;
+  qryExec := TZQuery.Create(nil);
+  try
+    data.conDBZanc.Connect;
+    qryExec.Connection := data.conDBZanc;
+    qryExec.SQL.Add('delete from tlote where id = ' + IntToStr(prId));
+
+    data.conDBZanc.StartTransaction;
+    try
+      qryExec.ExecSQL;
+      data.conDBZanc.Commit;
+      Result := True;
+      MsgErro := 'Lote excluído com sucesso.';
+    except
+      data.conDBZanc.Rollback;
+      Result := False;
+      MsgErro := 'Erro ao executar comando SQL';
+    end;
+  finally
+    FreeAndNil(qryExec);
+    data.conDBZanc.Disconnect;
+  end;
 end;
 
 function TLote_DAO.getAll: TList;
+var
+  qry             : TZQuery;
+  Lote            : TLote;
+  ListaRetorno    : TList;
+  DaoContratante  : TContratante_DAO;
+  DaoCliente      : TCliente_DAO;
 begin
-  Result := nil;
+  ListaRetorno := TList.Create;
+  DaoContratante := TContratante_DAO.Create;
+  DaoCliente := TCliente_DAO.Create;
+  ListaRetorno.Clear;
+  qry := TZQuery.Create(nil);
+  try
+    data.conDBZanc.Connect;
+    qry.Connection := data.conDBZanc;
+    qry.SQL.Add('select * from tlote ');
+    qry.Open;
+
+    if not qry.IsEmpty
+     then begin
+       while not qry.Eof do
+       begin
+         Lote := TLote.Create;
+         Lote.Clear;
+         Lote.Id                := qry.fieldbyname('Id').AsInteger;
+         Lote.Contratante       := DaoContratante.getById(qry.fieldbyname('Id_contrante').AsInteger) as TContratante;
+         Lote.Cliente           := DaoCliente.getById(qry.fieldbyname('Id_cliente').AsInteger) as TCliente;
+         Lote.OrdemServico      := qry.fieldbyname('OrdemServico').AsString;
+         Lote.NomeArquivo       := qry.fieldbyname('NomeArquivo').AsString;
+         Lote.DtEntrada         := qry.fieldbyname('dt_criacao').AsDateTime;
+         Lote.DtEnvioHigiene    := qry.fieldbyname('dt_envio_higienizacao').AsDateTime;
+         Lote.DtRetornoHigiene  := qry.fieldbyname('dt_retorno_higienizacao').AsDateTime;
+         Lote.DtEnvioImpressao  := qry.fieldbyname('dt_envio_impressao').AsDateTime;
+         Lote.DtEnvioPostagem   := qry.fieldbyname('dt_envio_postagem').AsDateTime;
+         Lote.DtPostagem        := qry.fieldbyname('dt_postagem').AsDateTime;
+         Lote.Ano               := qry.fieldbyname('Ano').AsInteger;
+         ListaRetorno.Add(Lote);
+         qry.Next;
+       end;
+     end;
+  finally
+    FreeAndNil(qry);
+    FreeAndNil(DaoContratante);
+    FreeAndNil(DaoCliente);
+  end;
+  Result := ListaRetorno;
+end;
+
+function TLote_DAO.getByCampo(prCampo, prValor: String): TList;
+var
+  qry : TZQuery;
+  Lote : TLote;
+  ListaRetorno : TList;
+  DaoContratante  : TContratante_DAO;
+  DaoCliente      : TCliente_DAO;
+begin
+  ListaRetorno := TList.Create;
+  DaoContratante := TContratante_DAO.Create;
+  DaoCliente := TCliente_DAO.Create;
+  ListaRetorno.Clear;
+  qry := TZQuery.Create(nil);
+  try
+    data.conDBZanc.Connect;
+    qry.Connection := data.conDBZanc;
+    if prCampo = 'Cliente'
+     then qry.SQL.Add('select * from tlote, tcliente where tlote.Id_cliente = tcliente.Id and tcliente.Nome like ''%' + prValor + '%''')
+     else if prCampo = 'Contratante'
+     then qry.SQL.Add('select * from tlote, tcontratante where tlote.Id_contrante = tcontratante.Id and tcontratante.Nome like ''%' + prValor + '%''')
+     else qry.SQL.Add('select * from tLote where ' + prCampo + ' like ''%' + prValor + '%''');
+    qry.Open;
+
+    if not qry.IsEmpty
+     then begin
+       while not qry.Eof do
+       begin
+         Lote := TLote.Create;
+         Lote.Clear;
+         Lote.Id                := qry.fieldbyname('Id').AsInteger;
+         Lote.Contratante       := DaoContratante.getById(qry.fieldbyname('Id_contrante').AsInteger) as TContratante;
+         Lote.Cliente           := DaoCliente.getById(qry.fieldbyname('Id_cliente').AsInteger) as TCliente;
+         Lote.OrdemServico      := qry.fieldbyname('OrdemServico').AsString;
+         Lote.NomeArquivo       := qry.fieldbyname('NomeArquivo').AsString;
+         Lote.DtEntrada         := qry.fieldbyname('dt_criacao').AsDateTime;
+         Lote.DtEnvioHigiene    := qry.fieldbyname('dt_envio_higienizacao').AsDateTime;
+         Lote.DtRetornoHigiene  := qry.fieldbyname('dt_retorno_higienizacao').AsDateTime;
+         Lote.DtEnvioImpressao  := qry.fieldbyname('dt_envio_impressao').AsDateTime;
+         Lote.DtEnvioPostagem   := qry.fieldbyname('dt_envio_postagem').AsDateTime;
+         Lote.DtPostagem        := qry.fieldbyname('dt_postagem').AsDateTime;
+         Lote.Ano               := qry.fieldbyname('Ano').AsInteger;
+         ListaRetorno.Add(Lote);
+         qry.Next;
+       end;
+     end;
+  finally
+    FreeAndNil(qry);
+    FreeAndNil(DaoContratante);
+    FreeAndNil(DaoCliente);
+  end;
+  Result := ListaRetorno;
 end;
 
 function TLote_DAO.getById(prId: Integer): TLote;
 var
-  qry : TZQuery;
-  Lote : TLote;
+  qry   : TZQuery;
+  Lote  : TLote;
+  DaoContratante  : TContratante_DAO;
+  DaoCliente      : TCliente_DAO;
 begin
   Lote := TLote.Create;
   qry := TZQuery.Create(nil);
+  DaoContratante := TContratante_DAO.Create;
+  DaoCliente := TCliente_DAO.Create;
   try
     data.conDBZanc.Connect;
     qry.Connection := data.conDBZanc;
@@ -45,23 +170,26 @@ begin
     qry.Open;
     if not qry.IsEmpty
      then begin
-       Lote.Id := qry.fieldbyname('Id').AsInteger;
-       Lote.IdContratante := qry.fieldbyname('Id_contrante').AsInteger;
-       Lote.IdCliente := qry.fieldbyname('Id_cliente').AsInteger;
-       Lote.OrdemServico := qry.fieldbyname('OrdemServico').AsString;
-       Lote.NomeArquivo := qry.fieldbyname('NomeArquivo').AsString;
-       Lote.DtEntrada := qry.fieldbyname('dt_criacao').AsDateTime;
-       Lote.DtEnvioHigiene := qry.fieldbyname('dt_envio_higienizacao').AsDateTime;
-       Lote.DtRetornoHigiene := qry.fieldbyname('dt_retorno_higienizacao').AsDateTime;
-       Lote.DtEnvioImpressao := qry.fieldbyname('dt_envio_impressao').AsDateTime;
-       Lote.DtEnvioPostagem := qry.fieldbyname('dt_envio_postagem').AsDateTime;
-       Lote.DtPostagem := qry.fieldbyname('dt_postagem').AsDateTime;
-       Lote.Ano := qry.fieldbyname('Ano').AsInteger;
+       Lote.Clear;
+       Lote.Id                := qry.fieldbyname('Id').AsInteger;
+       Lote.Contratante       := DaoContratante.getById(qry.fieldbyname('Id_contrante').AsInteger) as TContratante;
+       Lote.Cliente           := DaoCliente.getById(qry.fieldbyname('Id_cliente').AsInteger) as TCliente;
+       Lote.OrdemServico      := qry.fieldbyname('OrdemServico').AsString;
+       Lote.NomeArquivo       := qry.fieldbyname('NomeArquivo').AsString;
+       Lote.DtEntrada         := qry.fieldbyname('dt_criacao').AsDateTime;
+       Lote.DtEnvioHigiene    := qry.fieldbyname('dt_envio_higienizacao').AsDateTime;
+       Lote.DtRetornoHigiene  := qry.fieldbyname('dt_retorno_higienizacao').AsDateTime;
+       Lote.DtEnvioImpressao  := qry.fieldbyname('dt_envio_impressao').AsDateTime;
+       Lote.DtEnvioPostagem   := qry.fieldbyname('dt_envio_postagem').AsDateTime;
+       Lote.DtPostagem        := qry.fieldbyname('dt_postagem').AsDateTime;
+       Lote.Ano               := qry.fieldbyname('Ano').AsInteger;
      end
      else
        Lote := nil;
   finally
     FreeAndNil(qry);
+    FreeAndNil(DaoContratante);
+    FreeAndNil(DaoCliente);
   end;
 
   Result := Lote;
@@ -125,8 +253,8 @@ begin
        qryExec.SQL.Add(' :Ano)');
      end;
 
-     qryExec.ParamByName('Id_contrante').AsInteger             := prLote.IdContratante;
-     qryExec.ParamByName('Id_cliente').AsInteger               := prLote.IdCliente;
+     qryExec.ParamByName('Id_contrante').AsInteger             := prLote.Contratante.Id;
+     qryExec.ParamByName('Id_cliente').AsInteger               := prLote.Cliente.Id;
      qryExec.ParamByName('OrdemServico').AsString              := prLote.OrdemServico;
      qryExec.ParamByName('NomeArquivo').AsString               := prLote.NomeArquivo;
      if prLote.DtEntrada > 0

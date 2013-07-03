@@ -10,33 +10,6 @@ inherited frmCadLote: TfrmCadLote
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 16
-  object lblTitulo: TLabel [0]
-    Left = 9
-    Top = 10
-    Width = 89
-    Height = 19
-    Caption = 'Cadastro : '
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -16
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-  end
-  object Label14: TLabel [1]
-    Left = 11
-    Top = 10
-    Width = 89
-    Height = 19
-    Caption = 'Cadastro : '
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clTeal
-    Font.Height = -16
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-    Transparent = True
-  end
   inherited pnlGenerico: TPanel
     Width = 549
     Height = 380
@@ -75,12 +48,12 @@ inherited frmCadLote: TfrmCadLote
       Height = 16
       Caption = 'Ano'
     end
-    object Label12: TLabel
+    object lblTitulo: TLabel
       Left = 9
       Top = 10
-      Width = 125
+      Width = 89
       Height = 19
-      Caption = 'Cadastro : Lote'
+      Caption = 'Cadastro : '
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
@@ -88,12 +61,12 @@ inherited frmCadLote: TfrmCadLote
       Font.Style = [fsBold]
       ParentFont = False
     end
-    object Label13: TLabel
+    object lblTituloMascara: TLabel
       Left = 11
       Top = 10
-      Width = 125
+      Width = 89
       Height = 19
-      Caption = 'Cadastro : Lote'
+      Caption = 'Cadastro : '
       Font.Charset = ANSI_CHARSET
       Font.Color = clTeal
       Font.Height = -16

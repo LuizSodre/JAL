@@ -2,15 +2,16 @@ unit Lote_MDL;
 
 interface
 uses
-  Windows, Messages, SysUtils, Variants, TypInfo, ActiveX, Base_MDL;
+  Windows, Messages, SysUtils, Variants, TypInfo, ActiveX, Base_MDL, Cliente_MDL,
+  Contratante_MDL, Constantes;
 
 type
   TLote = class(TBase)
     constructor Create; override;
     destructor Destroy; override;
   private
-    fIdContratante: Integer;
-    fIdCliente: Integer;
+    fContratante: TContratante;
+    fCliente: TCliente;
     fOrdemServico: String;
     fNomeArquivo: String;
     fDtEnvioHigiene: TDateTime;
@@ -26,26 +27,25 @@ type
     procedure setDtEnvioPostagem(const Value: TDateTime);
     procedure setDtPostagem(const Value: TDateTime);
     procedure setDtRetornoHigiene(const Value: TDateTime);
-    procedure setIdCliente(const Value: Integer);
-    procedure setIdContratante(const Value: Integer);
+    procedure setCliente(const Value: TCliente);
+    procedure setContratante(const Value: TContratante);
     procedure setNomeArquivo(const Value: String);
     procedure setOrdemServico(const Value: String);
     procedure setAno(const Value: Integer);
-
   protected
-
   public
-    property OrdemServico     : String    read fOrdemServico     write setOrdemServico;
-    property NomeArquivo      : String    read fNomeArquivo      write setNomeArquivo;
-    property IdContratante    : Integer   read fIdContratante    write setIdContratante;
-    property IdCliente        : Integer   read fIdCliente        write setIdCliente;
-    property DtEntrada        : TDateTime read fDtEntrada        write setDtEntrada;
-    property DtEnvioHigiene   : TDateTime read fDtEnvioHigiene   write setDtEnvioHigiene;
-    property DtRetornoHigiene : TDateTime read fDtRetornoHigiene write setDtRetornoHigiene;
-    property DtEnvioImpressao : TDateTime read fDtEnvioImpressao write setDtEnvioImpressao;
-    property DtEnvioPostagem  : TDateTime read fDtEnvioPostagem  write setDtEnvioPostagem;
-    property DtPostagem       : TDateTime read fDtPostagem       write setDtPostagem;
-    property Ano              : Integer   read fAno              write setAno;
+    procedure Clear;override;
+    property OrdemServico     : String       read fOrdemServico     write setOrdemServico;
+    property NomeArquivo      : String       read fNomeArquivo      write setNomeArquivo;
+    property Contratante      : TContratante read fContratante      write setContratante;
+    property Cliente          : TCliente     read fCliente          write setCliente;
+    property DtEntrada        : TDateTime    read fDtEntrada        write setDtEntrada;
+    property DtEnvioHigiene   : TDateTime    read fDtEnvioHigiene   write setDtEnvioHigiene;
+    property DtRetornoHigiene : TDateTime    read fDtRetornoHigiene write setDtRetornoHigiene;
+    property DtEnvioImpressao : TDateTime    read fDtEnvioImpressao write setDtEnvioImpressao;
+    property DtEnvioPostagem  : TDateTime    read fDtEnvioPostagem  write setDtEnvioPostagem;
+    property DtPostagem       : TDateTime    read fDtPostagem       write setDtPostagem;
+    property Ano              : Integer      read fAno              write setAno;
   end;
 
 implementation
@@ -97,14 +97,14 @@ begin
   fDtRetornoHigiene := Value;
 end;
 
-procedure TLote.setIdCliente(const Value: Integer);
+procedure TLote.setCliente(const Value: TCliente);
 begin
-  fIdCliente := Value;
+  fCliente := Value;
 end;
 
-procedure TLote.setIdContratante(const Value: Integer);
+procedure TLote.setContratante(const Value: TContratante);
 begin
-  fIdContratante := Value;
+  fContratante := Value;
 end;
 
 procedure TLote.setNomeArquivo(const Value: String);
@@ -115,6 +115,22 @@ end;
 procedure TLote.setOrdemServico(const Value: String);
 begin
   fOrdemServico := Value;
+end;
+
+procedure TLote.Clear;
+begin
+  inherited;
+  fContratante      := nil;
+  fCliente          := nil;
+  fOrdemServico     := NO_STRING;
+  fNomeArquivo      := NO_STRING;
+  fDtEnvioHigiene   := 0;
+  fDtEnvioPostagem  := 0;
+  fDtEntrada        := 0;
+  fDtPostagem       := 0;
+  fDtRetornoHigiene := 0;
+  fDtEnvioImpressao := 0;
+  fAno              := 0;
 end;
 
 end.
