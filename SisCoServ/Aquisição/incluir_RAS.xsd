@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+ 
+<xsd:include schemaLocation="tipos_basicos.xsd" />
+							
+<!-- definition of complex elements -->       
+	<xsd:element name="IncluirRAS">
+		<xsd:complexType>
+        	<xsd:sequence>
+        		<xsd:element name="NumeroRASEmpresa" type="tsNumeroRASEmpresa" minOccurs="1" maxOccurs="1"/>
+            	<xsd:element name="NomeVendedor" type="tsNomeVendedor" minOccurs="1" maxOccurs="1"/>
+            	<xsd:element name="EnderecoVendedor" type="tsEnderecoVendedor" minOccurs="1" maxOccurs="1"/>
+           		<xsd:element name="CodigoPaisVendedor" type="tsCodigoPaisVendedor" minOccurs="1" maxOccurs="1"/>
+            	<xsd:element name="Nif" type="tsNif" minOccurs="0" maxOccurs="1"/>
+            	<xsd:element name="Operacao" type="tcOperacao" minOccurs="1" maxOccurs="unbounded"/>
+            	<xsd:element name="VincImportacaoBens" type="tcVincImportacaoBens" minOccurs="0" maxOccurs="unbounded"/>
+            	<xsd:element name="InfoComplementar" type="tsInfoComplementar" minOccurs="0" maxOccurs="1"/>          	
+           		<xsd:element name="CodigoMoeda" type="tsCodigoMoeda" minOccurs="1" maxOccurs="1"/>            	
+        	</xsd:sequence>
+    	</xsd:complexType>
+	</xsd:element>	
+</xsd:schema>

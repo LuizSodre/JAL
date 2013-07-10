@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<IncluirAditivo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="incluir_aditivo.xsd">
+  <NumeroRVSEmpresa></NumeroRVSEmpresa>
+  <Operacao>
+    <NumeroOperacaoEmpresa></NumeroOperacaoEmpresa>
+    <CodigoNbs></CodigoNbs>
+    <CodigoPaisDestino></CodigoPaisDestino>
+    <ModoPrestacao></ModoPrestacao>
+    <DataInicio></DataInicio>
+    <DataConclusao></DataConclusao>
+    <Valor></Valor>
+    <Enquadramento>
+      <CodigoEnquadramento></CodigoEnquadramento>
+      <NumeroRc></NumeroRc>
+    </Enquadramento>
+  </Operacao>
+</IncluirAditivo>

@@ -7,7 +7,8 @@ uses
   Dialogs, UntConsGenerico, StdCtrls, ComCtrls, Grids, Buttons, ExtCtrls,
   Cliente_MDL, Cliente_DAO, Constantes, FR_Class, FR_DSet, FR_DBSet, RpCon,
   RpConDS, RpConBDE, RpDefine, RpRave, DB, ZAbstractRODataset, ZDataset,
-  FR_OLE, ZAbstractDataset;
+  FR_OLE, ZAbstractDataset, ppCtrls, ppPrnabl, ppClass, ppBands, ppCache,
+  ppParameter, ppDB, ppDBPipe, ppComm, ppRelatv, ppProd, ppReport;
 
 const
   //Campos do Grid

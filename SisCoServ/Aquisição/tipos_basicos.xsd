@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<!-- definition of simple elements -->		
+	<xsd:simpleType name="tsNomeVendedor">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="150"/>
+			<xsd:minLength value="1"/>
+			<xsd:whiteSpace value="collapse"/>
+		</xsd:restriction>
+	</xsd:simpleType>	
+	
+	<xsd:simpleType name="tsEnderecoVendedor">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="150"/>
+			<xsd:minLength value="1"/>
+			<xsd:whiteSpace value="collapse"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="tsCodigoPaisVendedor">
+		<xsd:restriction base="xsd:int">
+			<xsd:totalDigits value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="tsNif">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="40"/>
+			<xsd:minLength value="0"/>
+			<xsd:whiteSpace value="collapse"/>
+		</xsd:restriction>
+	</xsd:simpleType>	
+	
+	<xsd:simpleType name="tsInfoComplementar">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20000"/>
+			<xsd:minLength value="0"/>
+			<xsd:whiteSpace value="collapse"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="tsCodigoMoeda">
+		<xsd:restriction base="xsd:int">
+			<xsd:totalDigits value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="tsCodigoNbs">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="9"/>
+			<xsd:minLength value="1"/>
+			<xsd:whiteSpace value="collapse"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="tsCodigoPaisDestino">
+		<xsd:restriction base="xsd:int">
+			<xsd:totalDigits value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="tsModoPrestacao">
+		<xsd:restriction base="xsd:int">
+			<xsd:pattern value="1|2|4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="tsValor">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="15"/>
+			<xsd:fractionDigits value="2" fixed="true"/>
+			<xsd:minExclusive value="0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="tsValorRetifica">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="15"/>
+			<xsd:fractionDigits value="2" fixed="true"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="tsCodigoEnquadramento">
+		<xsd:restriction base="xsd:int">
+			<xsd:totalDigits value="10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="tsNumeroRc">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d{2}/\d{6}"></xsd:pattern>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="tsNumeroDI">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d{2}/\d{7}-\d{1}"></xsd:pattern>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:complexType name="tcVincImportacaoBens">
+        <xsd:sequence>
+            <xsd:element name="NumeroDI" type="tsNumeroDI" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="exclusao" type="tsExclusao" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+		
+	<xsd:simpleType name="tsNumOpAdqEmpresa">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="10"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+		
+	<xsd:simpleType name="tsNumeroPagamento">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="60"/>
+			<xsd:minLength value="1"/>
+			<xsd:whiteSpace value="collapse"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="tsIdPagamentoEmpresa">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="10"/>
+			<xsd:minLength value="1"/>
+			<xsd:whiteSpace value="collapse"/>
+		</xsd:restriction>
+	</xsd:simpleType>	
+	
+	<xsd:simpleType name="tsExclusao">
+		<xsd:restriction base="xsd:boolean"/>
+	</xsd:simpleType>
+		
+	<!-- definition of complex elements -->    
+    <xsd:simpleType name="tsNumeroRASEmpresa">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="100"/>
+			<xsd:minLength value="1"/>
+			<xsd:whiteSpace value="collapse"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	    
+    <xsd:complexType name="tcOperacao">
+        <xsd:sequence>
+        	<xsd:element name="NumeroServAdqEmpresa" type="tsNumOpAdqEmpresa" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="CodigoNbs" type="tsCodigoNbs" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="CodigoPaisDestino" type="tsCodigoPaisDestino" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="ModoPrestacao" type="tsModoPrestacao" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="DataInicio" type="xsd:date" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="DataConclusao" type="xsd:date" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="Valor" type="tsValor" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="Enquadramento" type="tcEnquadramento" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+   	<xsd:complexType name="tcOperacaoRetifica">
+        <xsd:sequence>
+        	<xsd:element name="NumeroServAdqEmpresa" type="tsNumOpAdqEmpresa" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="CodigoNbs" type="tsCodigoNbs" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="CodigoPaisDestino" type="tsCodigoPaisDestino" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="ModoPrestacao" type="tsModoPrestacao" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="DataInicio" type="xsd:date" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="DataConclusao" type="xsd:date" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="Valor" type="tsValorRetifica" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="Enquadramento" type="tcEnquadramento" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="tcEnquadramento">
+        <xsd:sequence>
+            <xsd:element name="CodigoEnquadramento" type="tsCodigoEnquadramento" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="NumeroRc" type="tsNumeroRc" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="exclusao" type="tsExclusao" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

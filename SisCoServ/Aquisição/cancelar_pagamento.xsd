@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+<xsd:include schemaLocation="tipos_basicos.xsd" />
+
+    <xsd:element name="CancelarPagamento">        
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="IdPagamentoEmpresa" type="tsIdPagamentoEmpresa" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

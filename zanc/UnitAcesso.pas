@@ -4,22 +4,23 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, DB, ComCtrls, Mask, StdCtrls, Buttons, ExtCtrls,dmdata,unitMain;
+  Dialogs, DB, ComCtrls, Mask, StdCtrls, Buttons, ExtCtrls,dmdata,unitMain,
+  jpeg;
 
 type
   TfrmSenha = class(TForm)
     pnlGenerico: TPanel;
     Label1: TLabel;
     Label2: TLabel;
-    Panel1: TPanel;
-    btnCancelar: TBitBtn;
-    btnConfirmar: TBitBtn;
     edtusuario: TEdit;
     edtCop: TEdit;
     edtLar: TEdit;
     edtsenha: TMaskEdit;
-    StatusBar1: TStatusBar;
     dsGenerico: TDataSource;
+    btnConfirmar: TBitBtn;
+    btnCancelar: TBitBtn;
+    imgSplash: TImage;
+    Image2: TImage;
     procedure btnCancelarClick(Sender: TObject);
     procedure edtusuarioExit(Sender: TObject);
     procedure edtsenhaChange(Sender: TObject);

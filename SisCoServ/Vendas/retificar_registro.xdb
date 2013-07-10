@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xdb="http://www.borland.com/schemas/delphi/6.0/XMLDataBinding">
+	<xsd:include schemaLocation="tipos_basicos.xsd"/>
+	<!-- definition of complex elements -->
+	<xsd:element name="RetificarRVS">
+		<xsd:complexType>
+			<xsd:annotation>
+        <xsd:appinfo xdb:docElement="RetificarRVS"/>
+      </xsd:annotation>
+      <xsd:sequence>
+				<xsd:element name="NumeroRVSEmpresa" type="tsNumeroRvsEmpresa" minOccurs="1" maxOccurs="1"/>
+				<xsd:element name="NomeAdquirente" type="tsNomeAdquirente" minOccurs="0" maxOccurs="1"/>
+				<xsd:element name="EnderecoAdquirente" type="tsEnderecoAdquirente" minOccurs="0" maxOccurs="1"/>
+				<xsd:element name="CodigoPaisAdquirente" type="tsCodigoPaisAdquirente" minOccurs="0" maxOccurs="1"/>
+				<xsd:element name="Nif" type="tsNif" minOccurs="0" maxOccurs="1"/>
+				<xsd:element name="Operacao" type="tcOperacaoRetifica" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element name="VincExportacaoBens" type="tcVincExportacaoBens" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element name="InfoComplementar" type="tsInfoComplementar" minOccurs="0" maxOccurs="1"/>
+				<xsd:element name="CodigoMoeda" type="tsCodigoMoeda" minOccurs="0" maxOccurs="1"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

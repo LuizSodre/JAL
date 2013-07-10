@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RetificarRAS xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="retificar_RAS.xsd">
+  <NumeroRASEmpresa></NumeroRASEmpresa>
+  <NomeVendedor></NomeVendedor>
+  <EnderecoVendedor></EnderecoVendedor>
+  <CodigoPaisVendedor></CodigoPaisVendedor>
+  <Nif></Nif>
+  <Operacao>
+    <NumeroServAdqEmpresa></NumeroServAdqEmpresa>
+    <CodigoNbs></CodigoNbs>
+    <CodigoPaisDestino></CodigoPaisDestino>
+    <ModoPrestacao></ModoPrestacao>
+    <DataInicio></DataInicio>
+    <DataConclusao></DataConclusao>
+    <Valor></Valor>
+    <Enquadramento>
+      <CodigoEnquadramento></CodigoEnquadramento>
+      <NumeroRc></NumeroRc>
+      <exclusao></exclusao>
+    </Enquadramento>
+  </Operacao>
+  <VincImportacaoBens>
+    <NumeroDI></NumeroDI>
+    <exclusao></exclusao>
+  </VincImportacaoBens>
+  <InfoComplementar></InfoComplementar>
+  <CodigoMoeda></CodigoMoeda>
+</RetificarRAS>

@@ -30,8 +30,9 @@ uses
   UnitLibrary in 'UnitLibrary.pas',
   UnitParSistema in 'UnitParSistema.pas' {frmParametroSistema},
   UnitPreviewRel in 'UnitPreviewRel.pas' {frmPreviewRel},
-  untConsCliente in 'untConsCliente.pas' {frmConsCliente},
-  UnitSplash in 'UnitSplash.pas' {frmSplash};
+  untConsLote in 'untConsLote.pas' {frmConsLote},
+  UnitSplash in 'UnitSplash.pas' {frmSplash},
+  untConsCliente in 'untConsCliente.pas' {frmConsCliente};
 
 {$R *.res}
 

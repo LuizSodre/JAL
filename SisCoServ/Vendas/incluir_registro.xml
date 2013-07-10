@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<IncluirRVS xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="incluir_registro.xsd">
+  <NumeroRVSEmpresa></NumeroRVSEmpresa>
+  <NomeAdquirente></NomeAdquirente>
+  <EnderecoAdquirente></EnderecoAdquirente>
+  <CodigoPaisAdquirente></CodigoPaisAdquirente>
+  <Nif></Nif>
+  <Operacao>
+    <NumeroOperacaoEmpresa></NumeroOperacaoEmpresa>
+    <CodigoNbs></CodigoNbs>
+    <CodigoPaisDestino></CodigoPaisDestino>
+    <ModoPrestacao></ModoPrestacao>
+    <DataInicio></DataInicio>
+    <DataConclusao></DataConclusao>
+    <Valor></Valor>
+    <Enquadramento>
+      <CodigoEnquadramento></CodigoEnquadramento>
+      <NumeroRc></NumeroRc>
+    </Enquadramento>
+  </Operacao>
+  <VincExportacaoBens>
+    <NumeroRE></NumeroRE>
+  </VincExportacaoBens>
+  <InfoComplementar></InfoComplementar>
+  <CodigoMoeda></CodigoMoeda>
+</IncluirRVS>

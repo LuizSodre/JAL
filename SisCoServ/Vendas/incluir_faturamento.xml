@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<InclusaoFatura xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="incluir_faturamento.xsd">
+  <NumeroRVSEmpresa></NumeroRVSEmpresa>
+  <IdFaturaEmpresa></IdFaturaEmpresa>
+  <NumeroFatura></NumeroFatura>
+  <DataFatura></DataFatura>
+  <ItemFatura>
+    <NumeroOperacaoEmpresa></NumeroOperacaoEmpresa>
+    <ValorFaturado></ValorFaturado>
+    <ValorMantidoExterior></ValorMantidoExterior>
+  </ItemFatura>
+  <VinculacaoNumRE></VinculacaoNumRE>
+  <VinculacaoNumDI></VinculacaoNumDI>
+</InclusaoFatura>

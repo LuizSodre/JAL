@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RetificarRVS xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="retificar_registro.xsd">
+  <NumeroRVSEmpresa></NumeroRVSEmpresa>
+  <NomeAdquirente></NomeAdquirente>
+  <EnderecoAdquirente></EnderecoAdquirente>
+  <CodigoPaisAdquirente></CodigoPaisAdquirente>
+  <Nif></Nif>
+  <Operacao>
+    <NumeroOperacaoEmpresa></NumeroOperacaoEmpresa>
+    <CodigoNbs></CodigoNbs>
+    <CodigoPaisDestino></CodigoPaisDestino>
+    <ModoPrestacao></ModoPrestacao>
+    <DataInicio></DataInicio>
+    <DataConclusao></DataConclusao>
+    <Valor></Valor>
+    <Enquadramento>
+      <CodigoEnquadramento></CodigoEnquadramento>
+      <NumeroRc></NumeroRc>
+      <exclusao></exclusao>
+    </Enquadramento>
+  </Operacao>
+  <VincExportacaoBens>
+    <NumeroRE></NumeroRE>
+    <exclusao></exclusao>
+  </VincExportacaoBens>
+  <InfoComplementar></InfoComplementar>
+  <CodigoMoeda></CodigoMoeda>
+</RetificarRVS>

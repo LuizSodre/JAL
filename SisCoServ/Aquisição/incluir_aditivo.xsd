@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+<xsd:include schemaLocation="tipos_basicos.xsd" />
+
+<!-- definition of complex elements -->
+	<xsd:element name="IncluirAditivo">
+		<xsd:complexType>
+        	<xsd:sequence>
+        		<xsd:element name="NumeroRASEmpresa" type="tsNumeroRASEmpresa" minOccurs="1" maxOccurs="1"/>
+        		<xsd:element name="Operacao" type="tcOperacao" minOccurs="1" maxOccurs="unbounded"/>           	            	        
+        	</xsd:sequence>
+    	</xsd:complexType>
+	</xsd:element>
+</xsd:schema>	

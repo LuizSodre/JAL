@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<InclusaoPagamento xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="inclusao_pagamento.xsd">
+  <NumeroRASEmpresa></NumeroRASEmpresa>
+  <IdPagamentoEmpresa></IdPagamentoEmpresa>
+  <NumeroPagamento></NumeroPagamento>
+  <DataPagamento></DataPagamento>
+  <ItemPagamento>
+    <NumOpAdqEmpresa></NumOpAdqEmpresa>
+    <ValorPago></ValorPago>
+    <ValorPagoRecMantidoExt></ValorPagoRecMantidoExt>
+  </ItemPagamento>
+  <VinculacaoNumRE></VinculacaoNumRE>
+  <VinculacaoNumDI></VinculacaoNumDI>
+</InclusaoPagamento>

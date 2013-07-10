@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+<xsd:include schemaLocation="tipos_basicos.xsd" />
+
+<!-- definition of simple elements -->
+			
+	<xsd:simpleType name="tsValorFaturado">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="15"/>
+			<xsd:fractionDigits value="2" fixed="true"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="tsValorMantidoExterior">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="15"/>
+			<xsd:fractionDigits value="2" fixed="true"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+		
+	<xsd:simpleType name="tsVinculacaoNumRE">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d{2}/\d{10}"></xsd:pattern>
+		</xsd:restriction>
+	</xsd:simpleType>	
+		
+	<xsd:simpleType name="tsVinculacaoNumDI">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d{2}/\d{7}-\d{1}"></xsd:pattern>
+		</xsd:restriction>
+	</xsd:simpleType>
+	 
+<!-- definition of complex elements -->
+	<xsd:complexType name="tcItemFatura">
+        <xsd:sequence>
+            <xsd:element name="NumeroOperacaoEmpresa" type="tsNumeroOperacaoEmpresa" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="ValorFaturado" type="tsValorFaturado" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="ValorMantidoExterior" type="tsValorMantidoExterior" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+	<xsd:element name="InclusaoFatura">
+		<xsd:complexType>
+        	<xsd:sequence>
+            	<xsd:element name="NumeroRVSEmpresa" type="tsNumeroRvsEmpresa" minOccurs="1" maxOccurs="1"/>
+            	<xsd:element name="IdFaturaEmpresa" type="tsIdFaturaEmpresa" minOccurs="1" maxOccurs="1"/>
+            	<xsd:element name="NumeroFatura" type="tsNumeroFatura" minOccurs="1" maxOccurs="1"/>
+            	<xsd:element name="DataFatura" type="xsd:date" minOccurs="1" maxOccurs="1"/>
+            	<xsd:element name="ItemFatura" type="tcItemFatura" minOccurs="0" maxOccurs="unbounded"/>
+            	<xsd:element name="VinculacaoNumRE" type="tsVinculacaoNumRE" minOccurs="0" maxOccurs="unbounded"/>
+            	<xsd:element name="VinculacaoNumDI" type="tsVinculacaoNumDI" minOccurs="0" maxOccurs="unbounded"/> 
+        	</xsd:sequence>
+    	</xsd:complexType>
+	</xsd:element>
+</xsd:schema>
