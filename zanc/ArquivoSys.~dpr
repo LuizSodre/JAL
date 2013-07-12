@@ -2,6 +2,7 @@ program ArquivoSys;
 
 uses
   Forms,
+  Controls,
   SysUtils,
   dmdata in 'dmdata.pas' {data: TDataModule},
   UnitAcesso in 'UnitAcesso.pas' {frmSenha},
@@ -32,7 +33,9 @@ uses
   UnitPreviewRel in 'UnitPreviewRel.pas' {frmPreviewRel},
   untConsLote in 'untConsLote.pas' {frmConsLote},
   UnitSplash in 'UnitSplash.pas' {frmSplash},
-  untConsCliente in 'untConsCliente.pas' {frmConsCliente};
+  untConsCliente in 'untConsCliente.pas' {frmConsCliente},
+  Usuario_DAO in 'Usuario_DAO.pas',
+  Usuario_MDL in 'Usuario_MDL.pas';
 
 {$R *.res}
 
@@ -43,9 +46,17 @@ begin
   frmSplash.Show;
   frmSplash.Refresh;
   Application.CreateForm(Tdata, data);
-  Application.CreateForm(TfrmMain, frmMain);
   Sleep(2000);
   frmSplash.Hide;
   frmSplash.Free;
-  Application.Run;
+  Application.CreateForm(TfrmSenha, frmSenha);
+  if frmSenha.ShowModal = mrOk
+   then begin
+     FreeAndNil(frmSenha);
+     Application.CreateForm(TfrmMain, frmMain);
+     Application.Run;
+   end
+   else
+     Application.Terminate;
+
 end.

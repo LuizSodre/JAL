@@ -2572,7 +2572,7 @@ object frmSplash: TfrmSplash
     Left = 97
     Top = 102
     Width = 237
-    Height = 30
+    Height = 32
     Caption = 'Certain Information'
     Font.Charset = ANSI_CHARSET
     Font.Color = clNavy

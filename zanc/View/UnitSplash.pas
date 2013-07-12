@@ -37,7 +37,7 @@ end;
 
 procedure TfrmSplash.FormShow(Sender: TObject);
 begin
-  lblVersao.Caption := 'Versão : ' + GetVersionInfo;
+  lblVersao.Caption := 'Versão : ';
 end;
 
 end.

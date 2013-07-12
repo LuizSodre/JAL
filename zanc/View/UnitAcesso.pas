@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, DB, ComCtrls, Mask, StdCtrls, Buttons, ExtCtrls,dmdata,unitMain,
-  jpeg;
+  jpeg, Constantes;
 
 type
   TfrmSenha = class(TForm)
@@ -25,8 +25,10 @@ type
     procedure edtusuarioExit(Sender: TObject);
     procedure edtsenhaChange(Sender: TObject);
     procedure btnConfirmarClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
-    { Private declarations }
+    nrTentativas : SmallInt;
+    function isLoginValido : Boolean;
   public
     { Public declarations }
   end;
@@ -77,6 +79,39 @@ end;
 
 procedure TfrmSenha.btnConfirmarClick(Sender: TObject);
 begin
+  if edtusuario.Text = no_string
+  then begin
+    MessageDlg('O campo Usuário deve ser preenchido.', mtInformation, [mbOK], 0);
+    if edtusuario.CanFocus
+     then edtusuario.SetFocus;
+    Exit;
+  end;
+
+  if edtsenha.Text = no_string
+   then begin
+     MessageDlg('O campo Senha de Acesso deve ser preenchido.', mtInformation, [mbOK], 0);
+     if edtsenha.CanFocus
+      then edtsenha.SetFocus;
+     Exit;
+   end;
+
+  if isLoginValido
+   then ModalResult := mrOk
+   else begin
+     inc(nrTentativas);
+     if nrTentativas < 3
+      then begin
+        MessageDlg(Format('Tentativa %d de 3', [nrTentativas]), mtError, [mbOk], 0);
+        if edtsenha.CanFocus
+         then edtSenha.SetFocus;
+      end
+      else begin
+        MessageDlg(Format('%dª tentativa de acesso ao sistema.',[nrTentativas]) + #13 + 'A aplicação será fechada!', mtError,[mbOk], 0);
+        ModalResult := mrCancel;
+      end;
+   end;
+
+
   {with Data.qryUsuario do
   begin
     Data.qryUsuario.Close;
@@ -91,7 +126,7 @@ begin
       Exit;
     end;
     // verifica se a senha está correta.
-   
+
     if UpperCase( trim(edtsenha.Text)) <> UpperCase( Trim(Data.qryUsuario.FieldByName('SENHA').AsString)) then
  //     if edSenha.Text <> Trim(Cript(sdsUsuarios.FieldByName('USU_SENHA').AsString, 'DESCRIPT')) then
     begin
@@ -108,5 +143,16 @@ begin
 end;
 
 
+
+function TfrmSenha.isLoginValido: Boolean;
+begin
+  ShowMessage(IntToStr(Length(md5(edtsenha.Text))));
+  Result := True;
+end;
+
+procedure TfrmSenha.FormCreate(Sender: TObject);
+begin
+  nrTentativas := 0;
+end;
 
 end.
