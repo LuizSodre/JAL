@@ -286,18 +286,18 @@ procedure TfrmMain.actConsClienteExecute(Sender: TObject);
 begin
   tampaTela;
   if not Assigned(frmConsCliente)
-      then begin
-        frmConsCliente := TfrmConsCliente.Create(self);
-        frmConsCliente.Parent := pnlForms;
-        frmConsCliente.WindowState := wsNormal;
-        frmConsCliente.StatusBar1.Visible := False;
-      end;
-     frmConsCliente.lblTitulo.Caption := 'Consulta : Cliente';
-     frmConsCliente.lblTituloMascara.Caption := frmConsCliente.lblTitulo.Caption;
-     frmConsCliente.Left := 10;
-     frmConsCliente.Top := 10;
-     lboLista.Visible := False;
-     frmConsCliente.Show;
+   then begin
+     frmConsCliente := TfrmConsCliente.Create(self);
+     frmConsCliente.Parent := pnlForms;
+     frmConsCliente.WindowState := wsNormal;
+     frmConsCliente.StatusBar1.Visible := False;
+   end;
+  frmConsCliente.lblTitulo.Caption := 'Consulta : Cliente';
+  frmConsCliente.lblTituloMascara.Caption := frmConsCliente.lblTitulo.Caption;
+  frmConsCliente.Left := 10;
+  frmConsCliente.Top := 10;
+  lboLista.Visible := False;
+  frmConsCliente.Show;
 end;
 
 procedure TfrmMain.actConsContratanteExecute(Sender: TObject);
@@ -358,6 +358,9 @@ begin
 
   if Assigned(frmParametroSistema)
    then frmParametroSistema.Hide;
+
+
+
 end;
 
 end.

@@ -102,8 +102,7 @@ begin
      if nrTentativas < 3
       then begin
         MessageDlg(Format('Tentativa %d de 3', [nrTentativas]), mtError, [mbOk], 0);
-        if edtsenha.CanFocus
-         then edtSenha.SetFocus;
+        edtSenha.SetFocus;
       end
       else begin
         MessageDlg(Format('%dª tentativa de acesso ao sistema.',[nrTentativas]) + #13 + 'A aplicação será fechada!', mtError,[mbOk], 0);
@@ -145,9 +144,18 @@ end;
 
 
 function TfrmSenha.isLoginValido: Boolean;
+var
+  vUsuario, vSenha : string;
 begin
-  ShowMessage(IntToStr(Length(md5(edtsenha.Text))));
-  Result := True;
+  vUsuario := edtusuario.Text;
+  vSenha := edtsenha.Text;
+  Result := False;
+  if (vUsuario = USUARIOADM) and (vSenha = PASSADM)
+   then Result := True
+   else begin
+     Result := False;
+   end;
+  //ShowMessage(IntToStr(Length(md5(edtsenha.Text))));
 end;
 
 procedure TfrmSenha.FormCreate(Sender: TObject);

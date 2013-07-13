@@ -643,7 +643,6 @@ object frmSenha: TfrmSenha
       Width = 30
       Height = 30
       Default = True
-      ModalResult = 1
       ParentShowHint = False
       ShowHint = True
       TabOrder = 4

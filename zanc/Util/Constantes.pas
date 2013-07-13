@@ -15,6 +15,8 @@ const
   PASSWORD     = 'PASSWORD';
   PORT         = 'PORT';
   USER         = 'USER';
+  USUARIOADM   = 'ADMIN';
+  PASSADM      = 'PASS4ZANC';
 
 function md5(const Input: String): String;
 
