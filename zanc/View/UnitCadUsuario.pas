@@ -5,41 +5,19 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, dmdata,
   unitCadGenerico, StdCtrls, DB, Buttons, ComCtrls, ExtCtrls,
-  Dialogs, Cliente_MDL, Constantes;
+  Dialogs, Usuario_MDL, Constantes;
 
 type
   TfrmCadUsuario = class(TfrmCadGenerico)
     Label1: TLabel;
     edtNome: TEdit;
-    edtTpPessoa: TEdit;
+    edtLogin: TEdit;
     Label2: TLabel;
-    edtCpfCpnj: TEdit;
+    edtSenha: TEdit;
     Label3: TLabel;
-    edtEndereco: TEdit;
-    Label4: TLabel;
-    edtBairro: TEdit;
-    Label5: TLabel;
-    edtMunicipio: TEdit;
-    Label6: TLabel;
-    edtUf: TEdit;
-    Label7: TLabel;
-    edtNumero: TEdit;
-    Label8: TLabel;
-    Label9: TLabel;
-    edtTelefone: TEdit;
-    Label10: TLabel;
-    edtFax: TEdit;
-    Label11: TLabel;
-    edtEmail: TEdit;
-    btn1: TButton;
-    Label12: TLabel;
-    edtCep: TEdit;
     edtId: TEdit;
-    Label13: TLabel;
-    edtComplemento: TEdit;
     lblTitulo: TLabel;
     lblTituloMascara: TLabel;
-    Label15: TLabel;
     procedure btn1Click(Sender: TObject);
     procedure btnConfirmarClick(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);
@@ -48,8 +26,8 @@ type
     { Private declarations }
   public
     { Public declarations }
-    procedure LoadClienteToControls(prCliente : TCliente);
-    function LoadClinteFromControls : TCliente;
+    procedure LoadUsuarioToControls(prUsuario : TUsuario);
+    function LoadClinteFromControls : TUsuario;
   end;
 
 var
@@ -57,90 +35,71 @@ var
 
 implementation
 
-uses Cliente_DAO, unitMain;
+uses Usuario_DAO, unitMain;
 
 
 {$R *.dfm}
 
 procedure TfrmCadUsuario.btn1Click(Sender: TObject);
 {var
-  Cliente : TCliente;
-  dao : TCliente_DAO;}
+  Usuario : TUsuario;
+  dao : TUsuario_DAO;}
 begin
   inherited;
-  {dao := TCliente_DAO.Create;
-  Cliente := dao.getById(1);
-  if Assigned(Cliente)
+  {dao := TUsuario_DAO.Create;
+  Usuario := dao.getById(1);
+  if Assigned(Usuario)
    then begin
-     Edit1.Text := Cliente.Nome;
-     Edit2.Text := Cliente.TpPessoa;
-     Edit3.Text := Cliente.CpfCnpj;
+     Edit1.Text := Usuario.Nome;
+     Edit2.Text := Usuario.Login;
+     Edit3.Text := Usuario.CpfCnpj;
    end;
-  FreeAndNil(Cliente);}
+  FreeAndNil(Usuario);}
 end;
 
-procedure TfrmCadUsuario.LoadClienteToControls(prCliente: TCliente);
+procedure TfrmCadUsuario.LoadUsuarioToControls(prUsuario: TUsuario);
 begin
-  edtId.Text          := IntToStr(prCliente.Id);
-  edtNome.Text        := prCliente.Nome;
-  edtTpPessoa.Text    := prCliente.TpPessoa;
-  edtCpfCpnj.Text     := prCliente.CpfCnpj;
-  edtEndereco.Text    := prCliente.Endereco;
-  edtNumero.Text      := prCliente.Numero;
-  edtComplemento.Text := prCliente.Complemento;
-  edtBairro.Text      := prCliente.Bairro;
-  edtMunicipio.Text   := prCliente.Municipio;
-  edtUf.Text          := prCliente.Uf;
-  edtCep.Text         := prCliente.Cep;
-  edtTelefone.Text    := prCliente.Telefone;
-  edtFax.Text         := prCliente.Fax;
-  edtEmail.Text       := prCliente.Email;
+  edtId.Text          := IntToStr(prUsuario.Id);
+  edtNome.Text        := prUsuario.Nome;
+  edtLogin.Text       := prUsuario.Login;
+  edtSenha.Text       := getSenhaDesCripto(prUsuario.Senha);
 end;
 
-function TfrmCadUsuario.LoadClinteFromControls: TCliente;
+function TfrmCadUsuario.LoadClinteFromControls: TUsuario;
 var
-  Cliente : TCliente;
+  Usuario : TUsuario;
 begin
-  Cliente := TCliente.Create;
+  Usuario := TUsuario.Create;
   if edtId.Text <> NO_STRING
-   then Cliente.Id := StrToInt(edtId.Text)
-   else Cliente.Id := 0;
+   then Usuario.Id := StrToInt(edtId.Text)
+   else Usuario.Id := 0;
 
-  Cliente.Nome         := edtNome.Text;
-  Cliente.TpPessoa     := edtTpPessoa.Text;
-  Cliente.CpfCnpj      := edtCpfCpnj.Text;
-  Cliente.Endereco     := edtEndereco.Text;
-  Cliente.Numero       := edtNumero.Text;
-  Cliente.Complemento  := edtComplemento.Text;
-  Cliente.Bairro       := edtBairro.Text;
-  Cliente.Municipio    := edtMunicipio.Text;
-  Cliente.Uf           := edtUf.Text;
-  Cliente.Cep          := edtCep.Text;
-  Cliente.Telefone     := edtTelefone.Text;
-  Cliente.Fax          := edtFax.Text;
-  Cliente.Email        := edtEmail.Text;
-
-  Result := Cliente;
+  Usuario.Nome         := edtNome.Text;
+  Usuario.Login        := edtLogin.Text;
+  if edtSenha.Text <> no_string
+   then Usuario.Senha        := getSenhaCripto(edtSenha.Text);
+  
+  Result := Usuario;
 end;
 
 procedure TfrmCadUsuario.btnConfirmarClick(Sender: TObject);
 var
-  Cliente : TCliente;
-  dao : TCliente_DAO;
+  Usuario : TUsuario;
+  dao : TUsuario_DAO;
   vErroMsg : string;
 begin
   inherited;
   if (edtNome.Text <> NO_STRING) and
-     (edtTpPessoa.Text <> NO_STRING) and
-     (edtCpfCpnj.Text <> NO_STRING)
+     (edtLogin.Text <> NO_STRING) and
+     (edtSenha.Text <> NO_STRING)
    then begin
-     Cliente := LoadClinteFromControls;
-     if Assigned(Cliente)
+     Usuario := LoadClinteFromControls;
+     if Assigned(Usuario)
       then begin
-        dao := TCliente_DAO.Create;
+        dao := TUsuario_DAO.Create;
         try
           vErroMsg := NO_STRING;
-          if dao.Gravar(Cliente,vErroMsg)
+          if dao.Gravar(Usuario,vErroMsg)
            then begin
              ShowMessage(vErroMsg);
              Close;

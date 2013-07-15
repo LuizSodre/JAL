@@ -57,7 +57,7 @@ type
     function GetClienteByCombo(const prCombo : TComboBox) : TCliente;
     function GetContratanteByCombo(const prCombo : TComboBox) : TContratante;
     function GetIndexByCombo(const prCombo : TComboBox; prId : Integer) : Integer;
-    procedure LimpaCampos;
+    //procedure LimpaCampos;
     function ConcatenaDataHora(prData, prHora : String) : TDateTime;
     procedure SeparaDataHora(var prEditData, prEditHora : TMaskEdit; prDataHora : TDateTime);
   public
@@ -162,6 +162,7 @@ begin
            then begin
              ShowMessage(vErroMsg);
              Close;
+             LimpaCampos;
            end
            else ShowMessage(vErroMsg);
         finally
@@ -174,7 +175,6 @@ end;
 procedure TfrmCadLote.Button1Click(Sender: TObject);
 var
   data : TDateTime;
-  listacli : TList;
   daocli : TCliente_DAO;
   i : Integer;
 begin
@@ -245,7 +245,7 @@ begin
   Close;
 end;
 
-procedure TfrmCadLote.LimpaCampos;
+{procedure TfrmCadLote.LimpaCampos;
 begin
   cmbClientes.ItemIndex := -1;
   cmbContratantes.ItemIndex := -1;
@@ -265,7 +265,7 @@ begin
   medtHoraEnvioPostagem.Text := NO_STRING;
   edtDtPostagem.Text := NO_STRING;
   medtHoraPostagem.Text := NO_STRING;
-end;
+end;}
 
 function TfrmCadLote.ConcatenaDataHora(prData, prHora: String): TDateTime;
 var

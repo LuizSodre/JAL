@@ -24,7 +24,7 @@ type
     TreeView: TTreeView;
     Splitter1: TSplitter;
     imgTree: TImageList;
-    N12Acesso1: TMenuItem;
+    mnuCadUsuario: TMenuItem;
     dsVistoria: TDataSource;
     tbrMain: TToolBar;
     btnadm: TToolButton;
@@ -63,6 +63,7 @@ type
     actRelContratante: TAction;
     actRelContrato: TAction;
     actRelLote: TAction;
+    actCadUsuario: TAction;
     procedure Sair1Click(Sender: TObject);
     procedure tmrMainTimer(Sender: TObject);
     procedure TreeViewClick(Sender: TObject);
@@ -79,8 +80,10 @@ type
     procedure actConsContratanteExecute(Sender: TObject);
     procedure actConsContratoExecute(Sender: TObject);
     procedure actConsLoteExecute(Sender: TObject);
+    procedure actCadUsuarioExecute(Sender: TObject);
   private
     { Private declarations }
+    {Adicionar a liberação de instancia de janelas aqui}
     procedure tampaTela;
   public
     { Public declarations }
@@ -88,12 +91,13 @@ type
 
 var
   frmMain: TfrmMain;
+  frmCarregado : TForm;
 
 implementation
 
 uses UnitCadContratante, UnitCadCliente,{UnitCadcontrato,} UnitCadLote,
   UntConsGenerico, untConsCliente, UnitParSistema, untConsContratante,
-  untConsLote;
+  untConsLote, UnitCadUsuario;
 
 {$R *.DFM}
 
@@ -124,6 +128,10 @@ begin
    if Copy(lboLista.Items.Text,1,4)= '1.1.' then
    begin
      actParametroSistemaExecute(Sender);
+   end
+   else if Copy(lboLista.Items.Text,1,4)= '1.2.' then
+   begin
+     actCadUsuarioExecute(Sender);
    end
    else if Copy(lboLista.Items.Text,1,4)= '2.1.' then
    begin
@@ -212,7 +220,8 @@ begin
   tampaTela;
   if not Assigned(frmParametroSistema)
    then begin
-     frmParametroSistema := TfrmParametroSistema.Create(self);
+     frmParametroSistema := TfrmParametroSistema.Create(Application);
+     frmCarregado := frmParametroSistema;
      frmParametroSistema.Parent := pnlForms;
      frmParametroSistema.WindowState := wsNormal;
    end;
@@ -225,9 +234,11 @@ end;
 procedure TfrmMain.actCadClienteExecute(Sender: TObject);
 begin
   tampaTela;
+
   if not Assigned(frmCadCliente)
    then begin
-     frmCadCliente := TfrmCadCliente.Create(self);
+     frmCadCliente := TfrmCadCliente.Create(Application);
+     frmCarregado := frmCadCliente;
      frmCadCliente.Parent := pnlForms;
      frmCadCliente.WindowState := wsNormal;
      frmCadCliente.StatusBar1.Visible := False;
@@ -246,7 +257,8 @@ begin
   tampaTela;
   if not Assigned(frmCadContratante)
    then begin
-     frmCadContratante := TfrmCadContratante.Create(self);
+     frmCadContratante := TfrmCadContratante.Create(Application);
+     frmCarregado := frmCadContratante;
      frmCadContratante.Parent := pnlForms;
      frmCadContratante.WindowState := wsNormal;
      frmCadContratante.StatusBar1.Visible := False;
@@ -271,7 +283,8 @@ begin
   tampaTela;
   if not Assigned(frmCadLote)
    then begin
-     frmCadLote := TfrmCadLote.Create(self);
+     frmCadLote := TfrmCadLote.Create(Application);
+     frmCarregado := frmCadLote;
      frmCadLote.Parent := pnlForms;
      frmCadLote.WindowState := wsNormal;
      frmCadLote.StatusBar1.Visible := False;
@@ -288,6 +301,7 @@ begin
   if not Assigned(frmConsCliente)
    then begin
      frmConsCliente := TfrmConsCliente.Create(self);
+     frmCarregado := frmConsCliente;
      frmConsCliente.Parent := pnlForms;
      frmConsCliente.WindowState := wsNormal;
      frmConsCliente.StatusBar1.Visible := False;
@@ -305,7 +319,8 @@ begin
   tampaTela;
   if not Assigned(frmConsContratante)
       then begin
-        frmConsContratante := TfrmConsContratante.Create(self);
+        frmConsContratante := TfrmConsContratante.Create(Application);
+        frmCarregado := frmConsContratante;
         frmConsContratante.Parent := pnlForms;
         frmConsContratante.WindowState := wsNormal;
         frmConsContratante.StatusBar1.Visible := False;
@@ -329,7 +344,8 @@ begin
   tampaTela;
   if not Assigned(frmConsLote)
       then begin
-        frmConsLote := TfrmConsLote.Create(self);
+        frmConsLote := TfrmConsLote.Create(Application);
+        frmCarregado := frmConsLote;
         frmConsLote.Parent := pnlForms;
         frmConsLote.WindowState := wsNormal;
         frmConsLote.StatusBar1.Visible := False;
@@ -344,23 +360,100 @@ end;
 
 procedure TfrmMain.tampaTela;
 begin
-  if Assigned(frmCadCliente)
-   then frmCadCliente.Hide;
 
-  if Assigned(frmCadContratante)
-   then frmCadContratante.Hide;
+  if frmCarregado is TfrmCadCliente
+   then begin
+     if Assigned(frmCadCliente)
+      then begin
+        frmCarregado := nil;
+        FreeAndNil(frmCadCliente);
+      end;
+   end;
 
-  if Assigned(frmCadLote)
-   then frmCadLote.Hide;
+  if frmCarregado is TfrmCadContratante
+   then begin
+     if Assigned(frmCadContratante)
+      then begin
+        frmCarregado := nil;
+        FreeAndNil(frmCadContratante);
+      end;
+   end;
 
-  if Assigned(frmConsCliente)
-   then frmConsCliente.Hide;
+  if frmCarregado is TfrmCadLote
+   then begin
+     if Assigned(frmCadLote)
+      then begin
+        frmCarregado := nil;
+        FreeAndNil(frmCadLote);
+      end;
+   end;
 
-  if Assigned(frmParametroSistema)
-   then frmParametroSistema.Hide;
+  if frmCarregado is TfrmConsCliente
+   then begin
+     if Assigned(frmConsCliente)
+      then begin
+        frmCarregado := nil;
+        FreeAndNil(frmConsCliente);
+      end;
+   end;
 
+  if frmCarregado is TfrmConsContratante
+   then begin
+     if Assigned(frmConsContratante)
+      then begin
+        frmCarregado := nil;
+        FreeAndNil(frmConsContratante);
+      end;
+   end;
 
+  if frmCarregado is TfrmConsLote
+   then begin
+     if Assigned(frmConsLote)
+      then begin
+        frmCarregado := nil;
+        FreeAndNil(frmConsLote);
+      end;
+   end;
 
+  if frmCarregado is TfrmParametroSistema
+   then begin
+     if Assigned(frmParametroSistema)
+      then begin
+        frmCarregado := nil;
+        FreeAndNil(frmParametroSistema);
+      end;
+   end;
+
+  if frmCarregado is TfrmCadUsuario
+   then begin
+     if Assigned(frmCadUsuario)
+      then begin
+        frmCarregado := nil;
+        FreeAndNil(frmCadUsuario);
+      end;
+   end;
+
+end;
+
+procedure TfrmMain.actCadUsuarioExecute(Sender: TObject);
+begin
+  tampaTela;
+
+  if not Assigned(frmCadUsuario)
+   then begin
+     frmCadUsuario := TfrmCadUsuario.Create(Application);
+     frmCarregado := frmCadUsuario;
+     frmCadUsuario.Parent := pnlForms;
+     frmCadUsuario.WindowState := wsNormal;
+     frmCadUsuario.StatusBar1.Visible := False;
+   end;
+
+  frmCadUsuario.Left := 10;
+  frmCadUsuario.Top := 10;
+  frmCadUsuario.lblTitulo.Caption := 'Cadastro : Usuario';
+  frmCadUsuario.lblTituloMascara.Caption := frmCadUsuario.lblTitulo.Caption;
+  lboLista.Visible := False;
+  frmCadUsuario.Show;
 end;
 
 end.

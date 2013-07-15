@@ -3,7 +3,7 @@ unit Constantes;
 interface
 
 uses
-  Windows, SysUtils, Variants, TypInfo, StdCtrls, Wcrypt2;
+  Windows, SysUtils, Variants, TypInfo, StdCtrls, Wcrypt2, JvCipher;
 
 const
   NO_STRING = '';
@@ -17,8 +17,14 @@ const
   USER         = 'USER';
   USUARIOADM   = 'ADMIN';
   PASSADM      = 'PASS4ZANC';
+  CHAVESYSTEM  = 'ZANC';
 
 function md5(const Input: String): String;
+function getSenhaCripto(const Input: String): String;
+function getSenhaDesCripto(const Input: String): String;
+
+var
+  UsuarioLogado : string;
 
 
 implementation
@@ -56,6 +62,30 @@ begin
   end;
   Result := AnsiLowerCase(Result);
 
+end;
+
+function getSenhaCripto(const Input: String): String;
+var
+  vCripto : TJvVigenereCipher;
+begin
+  vCripto := TJvVigenereCipher.Create(nil);
+  try
+    Result := vCripto.EncodeString(CHAVESYSTEM, Input);
+  finally
+    FreeAndNil(vCripto);
+  end;
+end;
+
+function getSenhaDesCripto(const Input: String): String;
+var
+  vCripto : TJvVigenereCipher;
+begin
+  vCripto := TJvVigenereCipher.Create(nil);
+  try
+    Result := vCripto.DecodeString(CHAVESYSTEM, Input);
+  finally
+    FreeAndNil(vCripto);
+  end;
 end;
 
 end.

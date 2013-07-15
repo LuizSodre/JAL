@@ -36,7 +36,8 @@ uses
   untConsCliente in 'View\untConsCliente.pas' {frmConsCliente},
   Usuario_DAO in 'DAO\Usuario_DAO.pas',
   Usuario_MDL in 'Model\Usuario_MDL.pas',
-  wcrypt2 in 'Util\Wcrypt2.pas';
+  wcrypt2 in 'Util\Wcrypt2.pas',
+  UnitCadUsuario in 'View\UnitCadUsuario.pas' {frmCadUsuario};
 
 {$R *.res}
 

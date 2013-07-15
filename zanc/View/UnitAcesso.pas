@@ -150,11 +150,15 @@ begin
   vUsuario := edtusuario.Text;
   vSenha := edtsenha.Text;
   Result := False;
+  UsuarioLogado := NO_STRING;
   if (vUsuario = USUARIOADM) and (vSenha = PASSADM)
    then Result := True
    else begin
      Result := False;
    end;
+
+  if Result
+   then UsuarioLogado := vUsuario; 
   //ShowMessage(IntToStr(Length(md5(edtsenha.Text))));
 end;
 

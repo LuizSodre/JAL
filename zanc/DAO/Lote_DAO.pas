@@ -211,7 +211,7 @@ begin
     if not qry.IsEmpty
      then begin
        qryExec.SQL.Add('update tlote set ');
-       qryExec.SQL.Add(' Id_contrante = :Id_contrante');
+       qryExec.SQL.Add(' Id_contrante = :Id_contrante,');
        qryExec.SQL.Add(' Id_cliente = :Id_cliente,');
        qryExec.SQL.Add(' OrdemServico = :OrdemServico,');
        qryExec.SQL.Add(' NomeArquivo = :NomeArquivo,');
@@ -221,7 +221,7 @@ begin
        qryExec.SQL.Add(' dt_envio_impressao = :dt_envio_impressao,');
        qryExec.SQL.Add(' dt_envio_postagem = :dt_envio_postagem,');
        qryExec.SQL.Add(' dt_postagem = :dt_postagem,');
-       qryExec.SQL.Add(' Ano = :Ano,');
+       qryExec.SQL.Add(' Ano = :Ano');
        qryExec.SQL.Add(' where id = :id');
 
        qryExec.ParamByName('id').AsInteger :=  prLote.Id;

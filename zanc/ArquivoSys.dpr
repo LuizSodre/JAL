@@ -37,7 +37,10 @@ uses
   Usuario_DAO in 'DAO\Usuario_DAO.pas',
   Usuario_MDL in 'Model\Usuario_MDL.pas',
   wcrypt2 in 'Util\Wcrypt2.pas',
-  UnitCadUsuario in 'View\UnitCadUsuario.pas' {frmCadUsuario};
+  UnitCadUsuario in 'View\UnitCadUsuario.pas' {frmCadUsuario},
+  JVCLVer in 'Util\JVCLVer.pas',
+  JvComponentBase in 'Util\JvComponentBase.pas',
+  JvCipher in 'Util\JvCipher.pas';
 
 {$R *.res}
 

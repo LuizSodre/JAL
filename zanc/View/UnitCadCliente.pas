@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, dmdata,
   unitCadGenerico, StdCtrls, DB, Buttons, ComCtrls, ExtCtrls,
-  Dialogs, Cliente_MDL, Constantes;
+  Dialogs, Cliente_MDL, Constantes, Grids;
 
 type
   TfrmCadCliente = class(TfrmCadGenerico)
@@ -57,7 +57,7 @@ var
 
 implementation
 
-uses Cliente_DAO, unitMain;
+uses Cliente_DAO, unitMain, IniFiles;
 
 
 {$R *.dfm}
@@ -143,7 +143,9 @@ begin
           if dao.Gravar(Cliente,vErroMsg)
            then begin
              ShowMessage(vErroMsg);
+             FreeAndNil(Cliente);
              Close;
+             LimpaCampos;
            end
            else ShowMessage(vErroMsg);
         finally
@@ -161,7 +163,9 @@ end;
 procedure TfrmCadCliente.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
-  //Action := caFree;
+//  Action := caFree;
 end;
+
+
 
 end.

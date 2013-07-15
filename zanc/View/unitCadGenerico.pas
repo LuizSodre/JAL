@@ -4,7 +4,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics,
-  Controls, Forms, Dialogs, StdCtrls, DB, Buttons, ComCtrls, ExtCtrls;
+  Controls, Forms, Dialogs, StdCtrls, DB, Buttons, ComCtrls, ExtCtrls,
+  Constantes, Grids;
 
   type
   TfrmCadGenerico=class(TForm)
@@ -33,6 +34,8 @@ uses
     procedure FormKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
+  protected
+    procedure LimpaCampos; virtual;
   public
     { Public declarations }
   end ;
@@ -962,6 +965,26 @@ begin
      key := #0;
      PostMessage(handle, WM_KEYDOWN, VK_TAB, 1);
    end;
+end;
+
+procedure TfrmCadGenerico.LimpaCampos;
+var
+  Interador : integer;
+begin
+  for Interador := 0 to pred(ComponentCount) do
+  begin
+    if Components[Interador] is TEdit then
+      TEdit(Components[Interador]).Text := NO_STRING;
+
+    if Components[Interador] is TComboBox then
+      TComboBox(Components[Interador]).ItemIndex := -1;
+
+    if Components[Interador] is TStringGrid then
+    begin
+      TStringGrid(Components[Interador]).RowCount := 2;
+      TStringGrid(Components[Interador]).Rows[1].Clear;
+    end;
+  end;
 end;
 
 end.
