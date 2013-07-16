@@ -140,12 +140,16 @@ begin
         dao := TCliente_DAO.Create;
         try
           vErroMsg := NO_STRING;
-          if dao.Gravar(Cliente,vErroMsg)
+          if dao.isValido(Cliente, vErroMsg)
            then begin
-             ShowMessage(vErroMsg);
-             FreeAndNil(Cliente);
-             Close;
-             LimpaCampos;
+             if dao.Gravar(Cliente,vErroMsg)
+              then begin
+                ShowMessage(vErroMsg);
+                FreeAndNil(Cliente);
+                Close;
+                LimpaCampos;
+              end
+              else ShowMessage(vErroMsg);
            end
            else ShowMessage(vErroMsg);
         finally

@@ -13,10 +13,10 @@ type
     function isValido(prCliente : TCliente; var MsgErro : String): Boolean;
     function Gravar(prCliente : TCliente; var MsgErro : String): Boolean;
     function Excluir(prId : Integer; var MsgErro : String) : Boolean;
-
   end;
 
 implementation
+
 uses dmdata;
 
 { TCliente_DAO }
@@ -277,8 +277,15 @@ end;
 
 function TCliente_DAO.isValido(prCliente: TCliente;
   var MsgErro: String): Boolean;
+var
+  vResultado: Boolean;
 begin
-  Result := True;
+  Result := False;
+
+  vResultado := getCpfCnpjValido(prCliente.TpPessoa, prCliente.CpfCnpj, MsgErro);
+  if  vResultado
+    or(MsgErro = NO_STRING)
+   then Result := True;
 end;
 
 end.
